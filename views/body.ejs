@@ -1,0 +1,12 @@
+<div class="default-page" ng-controller="SpiderController">
+    <div class="header">
+        <h1 id="main-title" class="container"><a href="/" target="_self">Air</a></h1>
+    </div>
+    <a href=""></a>
+    <form class="sp_form">
+        <input type="text" class="sp_url" placeholder="eg:http://www.example.com">
+        <input type="text" class="sp_name" placeholder="网址名称">
+        <input type="button" class="sp_btn" value="添加" ng-click="add($event)">
+        <label class="sp_label" ng-bind="resultTip"></label>
+    </form>
+</div>

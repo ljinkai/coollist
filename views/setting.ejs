@@ -1,0 +1,11 @@
+<div class="default-page" ng-controller="SetController">
+    <div class="header">
+        <h1 id="main-title" class="container"><a href="/" target="_self">Air</a></h1>
+    </div>
+    <a href=""></a>
+    <form class="sp_form">
+        <input type="text" class="sp_url" placeholder="eg:http://www.example.com/rss">
+        <input type="button" class="sp_btn" value="增加订阅" ng-click="add($event)">
+        <label class="sp_label" ng-bind="resultTip"></label>
+    </form>
+</div>
