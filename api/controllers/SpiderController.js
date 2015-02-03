@@ -37,7 +37,6 @@ module.exports = {
     },
     rssParse : function(requ,resp) {
         var url = requ.param("src");
-        console.log(url);
         var req = request(url)
             , feedparser = new FeedParser();
         var i = 0;
