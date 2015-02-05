@@ -1,13 +1,10 @@
-<div class="header">
-    <div id="main-title" class="container logo"></div>
-    <div class="header_set">
-        <a href="/air" target="_self">add</a>
-        <!--<a href="/set" target="_blank">set</a>-->
-        <!--<a href="https://leancloud.cn/docs/js_guide.html" target="_blank">guide</a>-->
-    </div>
-</div>
 <div class="ls_body">
     <% results.forEach(function(item, index){ %>
-     <a href="<%=item.url%>" class="ls_a" target="_blank"><%= item.title %></a>
+    <div class="row">
+        <div class="ls_num col-xs-1"><%= index%>.</div>
+        <div class="col-xs-10"><a href="<%=item.url%>" class="ls_a" target="_blank"><%= item.title %></a></div>
+    </div>
     <% }) %>
+    <div class="ls_more">更多</div>
 </div>
+

@@ -33,8 +33,8 @@ module.exports.routes = {
   ***************************************************************************/
 
     '/': "HomeController.home",
-    '/air': {
-        view: 'body'
+    '/submit': {
+        view: 'submit'
     },
     '/set' : {
         view: 'setting'
