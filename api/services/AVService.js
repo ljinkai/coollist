@@ -39,7 +39,6 @@ module.exports = {
         query.descending("updatedAt");
         query.find({
             success: function(results) {
-                console.log("print::" + results.length);
                 // Do something with the returned AV.Object values
                 var resArray = [];
                 for (var i = 0; i < results.length; i++) {
