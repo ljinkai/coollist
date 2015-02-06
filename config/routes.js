@@ -40,6 +40,7 @@ module.exports.routes = {
         view: 'setting'
     },
     '/@rss' : "SpiderController.rssParse",
+    '/@rss-test' : "SpiderController.excuteRssInsert",
     'post /@addWeb': "SpiderController.connectLean"
 
   /***************************************************************************
