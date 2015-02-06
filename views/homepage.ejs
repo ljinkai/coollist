@@ -2,7 +2,7 @@
     <% results.forEach(function(item, index){ %>
     <div class="row">
         <div class="ls_num col-xs-1"><%= index +1 %>.</div>
-        <div class="col-xs-10"><a href="<%=item.url%>" class="ls_a" target="_blank"><%= item.title %></a></div>
+        <div class="col-xs-10"><a href="<%=item.url%>" class="ls_a" target="_blank" alt="<%= item.title %>" title="<%= item.title %>"><%= item.title %></a></div>
     </div>
     <% }) %>
     <div class="ls_more">更多</div>
