@@ -18,7 +18,8 @@ body {
   font-size: 14px;
 }
 .cl_body {
-  width: 80%;
+  width: 100%;
+  max-width: 1024px;
   margin: 0px auto;
   background-color: #f6f6ef;
 }

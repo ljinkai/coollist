@@ -30,12 +30,19 @@ module.exports = {
         return deferred.promise;
 
     },
-    find: function (req, object) {
+    find: function (req, object, params) {
         var deferred = Q.defer();
         AV.initialize("e4wnmd3z7unk5wxu3jm3579abpvopi9bb2e7fgsmqfl3zsqk", "4fktyp6v43v3n1vgke5771tovv62xuxsatnux7weq4b9kqwz");
         var GameScore = AV.Object.extend(object);
         var query = new AV.Query(GameScore);
-//        query.limit(10); // limit to at most 10 results
+        if (params && params.skip) {
+            query.skip(params.skip);
+        }
+        var limit = 30;
+        if (params && params.limit) {
+            limit = params.limit;
+        }
+        query.limit(limit); // limit to at most 10 results
         query.descending("updatedAt");
         query.find({
             success: function(results) {

@@ -2,6 +2,11 @@
  * the public file to define banner、filter、service..
  */
 angular.module("app",[])
+    .controller('HomeController',
+        ['$rootScope', '$scope','$http',
+            function($rootScope, $scope,$http) {
+
+            }])
     .controller('SpiderController',
         ['$rootScope', '$scope','$http',
             function($rootScope, $scope,$http) {

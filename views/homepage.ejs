@@ -1,10 +1,13 @@
-<div class="ls_body">
+<div class="ls_body" ng-controller="HomeController">
     <% results.forEach(function(item, index){ %>
+    <% numb = next.skip - 30 + index + 1%>
     <div class="row">
-        <div class="ls_num col-xs-1"><%= index +1 %>.</div>
+        <div class="ls_num col-xs-1"><%= numb %>.</div>
         <div class="col-xs-10"><a href="<%=item.url%>" class="ls_a" target="_blank" alt="<%= item.title %>" title="<%= item.title %>"><%= item.title %></a></div>
     </div>
     <% }) %>
-    <div class="ls_more">更多</div>
+    <% if (results.length >= 30) { %>
+        <div class="ls_more"><a href="/next/?skip=<%= next.skip %>" target="_self">更多</a></div>
+    <%}%>
 </div>
 

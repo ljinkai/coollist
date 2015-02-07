@@ -9,6 +9,7 @@ var schedule = require('node-schedule');
 //初始化并设置定时任务的时间
 var rule = new schedule.RecurrenceRule();
 rule.hour = 2;
+rule.minute = 0;
 //处理要做的事情
 var j = schedule.scheduleJob(rule, function(){
     spiderCtr.excuteRssInsert();

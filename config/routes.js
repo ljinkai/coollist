@@ -41,7 +41,8 @@ module.exports.routes = {
     },
     '/@rss' : "SpiderController.rssParse",
     '/@rss-test' : "SpiderController.excuteRssInsert",
-    'post /@addWeb': "SpiderController.connectLean"
+    'post /@addWeb': "SpiderController.connectLean",
+    'get /next/': "HomeController.next"
 
   /***************************************************************************
   *                                                                          *
