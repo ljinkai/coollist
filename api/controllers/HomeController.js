@@ -22,6 +22,12 @@ module.exports = {
         },function(error) {
             res.notFound();
         });
+    },
+    about: function (req, res) {
+        res.view("about");
+    },
+    feedback: function (req, res) {
+        res.view("feedback");
     }
 };
 

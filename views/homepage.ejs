@@ -3,7 +3,9 @@
     <% numb = next.skip - 30 + index + 1%>
     <div class="row">
         <div class="ls_num col-xs-1"><%= numb %>.</div>
-        <div class="col-xs-10"><a href="<%=item.url%>" class="ls_a" target="_blank" alt="<%= item.title %>" title="<%= item.title %>"><%= item.title %></a></div>
+        <div class="col-xs-10">
+            <a href="<%=item.url%>" class="ls_a" target="_blank" alt="<%= item.title %>"><%= item.title %></a>
+        </div>
     </div>
     <% }) %>
     <% if (results.length >= 30) { %>

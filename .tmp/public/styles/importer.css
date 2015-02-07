@@ -75,6 +75,7 @@ a {
 .ls_a {
   display: block;
   width: auto;
+  float: left;
 }
 .ls_more {
   margin-left: 30px;
