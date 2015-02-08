@@ -41,9 +41,11 @@ module.exports.routes = {
     },
     '/@rss' : "SpiderController.rssParse",
     '/@rss-test' : "SpiderController.excuteRssInsert",
+    '/@feedback' : "CommonController.addFeedback",
     'post /@addWeb': "SpiderController.connectLean",
     'get /next/': "HomeController.next",
-    'get /about': "HomeController.about"
+    'get /about': "HomeController.about",
+    'get /feedback': "HomeController.feedback"
 
   /***************************************************************************
   *                                                                          *

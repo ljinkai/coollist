@@ -31,7 +31,7 @@ module.exports = {
             success: function(gameScore) {
                 // Execute any logic that should take place after the object is saved.
                 console.log('New object created with objectId: ' + gameScore.id);
-                var result = {"_STATE_":"200","MSG":"OK"};
+                var result = {"_STATE_":"200","MSG":"添加成功"};
                 res.json(result);
             },
             error: function(gameScore, error) {

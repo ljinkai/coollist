@@ -43,6 +43,9 @@ a {
   margin-right: 10px;
   font-weight: normal;
 }
+.nav_item-main {
+  margin-right: 16px;
+}
 .nav_item-right {
   float: right;
 }
@@ -104,6 +107,12 @@ a {
   width: 100%;
   margin: 10px 0px;
 }
+.fd_msg {
+  width: 100%;
+}
+.fd_email {
+  width: 100%;
+}
 .footer {
   height: 50px;
   line-height: 50px;
@@ -114,4 +123,5 @@ a {
 }
 .foo_item {
   list-style: none;
+  margin: 0px 12px;
 }
