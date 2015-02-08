@@ -45,7 +45,8 @@ module.exports.routes = {
     'post /@addWeb': "SpiderController.connectLean",
     'get /next/': "HomeController.next",
     'get /about': "HomeController.about",
-    'get /feedback': "HomeController.feedback"
+    'get /feedback': "HomeController.feedback",
+    'get /login': "HomeController.login"
 
   /***************************************************************************
   *                                                                          *

@@ -28,6 +28,9 @@ module.exports = {
     },
     feedback: function (req, res) {
         res.view("feedback");
+    },
+    login: function (req, res) {
+        res.view("login");
     }
 };
 
