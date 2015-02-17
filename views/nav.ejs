@@ -1,4 +1,4 @@
-<div class="header row">
+<div class="header row" ng-controller="NavController">
     <!--<div id="main-title" class="container col-xs-2">-->
 
     <!--</div>-->
@@ -6,9 +6,13 @@
         <h2 class="nav_item nav_item-main"><a href="/" target="_self"><strong>Cool List</strong></a></h2>
         <h2 class="nav_item"><a href="/" target="_self">最新</a></h2>
         <h2 class="nav_item">|</h2>
-        <h2 class="nav_item"><a href="/submit" target="_self">提交</a></h2>
+        <h2 class="nav_item nav_item-opacity" ng-click="submit($event)">提交</h2>
     </div>
     <div class="header_set col-xs-4">
-        <a class="nav_item nav_item-right" href="/login" target="_self">登录</a>
+        <a class="nav_item nav_item-right hide" ng-class="{'show':!loginState}" href="/login" target="_self">登录</a>
+        <div class="nav_item nav_item-right hide" ng-class="{'show':loginState}">
+            <span ng-bind="userName"></span>
+            &nbsp;<span class="nav_item-opacity" ng-click="logout($event)">退出</span>
+        </div>
     </div>
 </div>

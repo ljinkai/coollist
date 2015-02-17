@@ -5,6 +5,12 @@
         <div class="ls_num col-xs-1"><%= numb %>.</div>
         <div class="col-xs-10">
             <a href="<%=item.url%>" class="ls_a" target="_blank" alt="<%= item.title %>"><%= item.title %></a>
+            <div style="width: 100%;clear:both;height: 12px;line-height: 12px;font-size: 12px;margin-bottom: 5px;">
+                <% if (item.nick) {%>
+                    <span>by <%=item.nick%> | </span>
+                <%}%>
+                <span><%=: item.time | timeago %></span>
+            </div>
         </div>
     </div>
     <% }) %>

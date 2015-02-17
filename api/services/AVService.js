@@ -28,11 +28,9 @@ module.exports = {
             }
         });
         return deferred.promise;
-
     },
     find: function (req, object, params) {
         var deferred = Q.defer();
-        AV.initialize("e4wnmd3z7unk5wxu3jm3579abpvopi9bb2e7fgsmqfl3zsqk", "4fktyp6v43v3n1vgke5771tovv62xuxsatnux7weq4b9kqwz");
         var GameScore = AV.Object.extend(object);
         var query = new AV.Query(GameScore);
         if (params && params.skip) {
@@ -50,7 +48,8 @@ module.exports = {
                 var resArray = [];
                 for (var i = 0; i < results.length; i++) {
                     var object = results[i];
-                    var temp = {"url":object.get('url'),"title":object.get('title')};
+                    var temp = {"url":object.get('url'),"title":object.get('title'),"nick":object.get('nick'),
+                        "user":object.get('user'),"time":object.createdAt};
 //                    console.log(JSON.stringify(object) + object.title + ' - ' + object.get('title'));
                     resArray.push(temp);
                 }
@@ -61,6 +60,24 @@ module.exports = {
                 console.log("Error: " + error.code + " " + error.message);
                 deferred.reject(error);
 
+            }
+        });
+        return deferred.promise;
+
+    },
+    first: function (req, object, key,value) {
+        var deferred = Q.defer();
+        AV.initialize("e4wnmd3z7unk5wxu3jm3579abpvopi9bb2e7fgsmqfl3zsqk", "4fktyp6v43v3n1vgke5771tovv62xuxsatnux7weq4b9kqwz");
+        var GameScore = AV.Object.extend(object);
+        var query = new AV.Query(GameScore);
+        query.equalTo(key, value);
+        query.first({
+            success: function(results) {
+                deferred.resolve(results);
+            },
+            error: function(error) {
+                console.log("Error: " + error.code + " " + error.message);
+                deferred.reject(error);
             }
         });
         return deferred.promise;

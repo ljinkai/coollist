@@ -47,7 +47,8 @@ module.exports = {
                 if (i < limitNum) {
 //                    console.log("print:ok:" + JSON.stringify(item));
                     avs.add(req,"WebSite",{"url":item.link,"title":item.title,
-                        "summary":item.summary,"read":0,"up":1,"priority":0,"site":webLink}).then(function(data) {
+                        "summary":item.summary,"read":1,"up":1,"priority":0,
+                        "site":webLink,"user":"cl_andy","nick":"Andy"}).then(function(data) {
                         if (ok == (limitNum - 1)) {
                             var result = {"_STATE_":"200","MSG":"OK"};
                             deferred.resolve(result);
