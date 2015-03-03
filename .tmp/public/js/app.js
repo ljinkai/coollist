@@ -53,6 +53,36 @@ angular.module("app",[])
                         return appStr[key];
                     }
                 }
+                function checkeURL(URL){
+                    var str=URL;
+                    //在JavaScript中，正则表达式只能使用"/"开头和结束，不能使用双引号
+                    //判断URL地址的正则表达式为:http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?
+                    //下面的代码中应用了转义字符"\"输出一个字符"/"
+                    var Expression=/http(s)?:////([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/;
+                    var objExp=new RegExp(Expression);
+                    if(objExp.test(str)==true){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+                $("#submit_url").bind("paste",function() {
+                    setTimeout(function() {
+                        var url = $("#submit_url").val();
+                        if (checkeURL(url)) {
+                            var data = {"url":url};
+                            $scope.sb_loader_flag = true;
+                            $http.post("/@title-get", data).then(function(res) {
+                                if (res.data && res.data._STATE_ == "200") {
+                                    if (res.data.DATA.title) {
+                                        $scope.sb_loader_flag = false;
+                                        $("#submit_name").val($.trim(res.data.DATA.title));
+                                    }
+                                }
+                            });
+                        }
+                    },500);
+                });
                 $scope.add = function() {
                     var url = $(".sp_url").val();
                     var name = $(".sp_name").val();
@@ -64,10 +94,8 @@ angular.module("app",[])
 
                     var data = {"url":url,"title":name,"id":id,"nick":nick};
                     $http.post("/@addWeb", data).then(function(res) {
-                        console.log("print::" + JSON.stringify(res));
                         if (res.data && res.data._STATE_ == "200") {
-                            $scope.resultTip = res.data.MSG;
-                            $scope._resetForm();
+                            window.location.href = "/";
                         }
                     });
                 }

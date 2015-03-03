@@ -1,7 +1,10 @@
 <div class="default-page" ng-controller="SpiderController">
     <form class="sp_form">
-        <input type="text" class="sp_url" placeholder="eg:http://www.example.com">
-        <input type="text" class="sp_name" placeholder="网址名称">
+        <div class="sb_url_par">
+            <input type="text" class="sp_url" id="submit_url" placeholder="链接">
+            <span class="sb_loader hide" ng-class="{'show':sb_loader_flag}"></span>
+        </div>
+        <input type="text" class="sp_name" id="submit_name" placeholder="说明">
         <input type="button" class="sp_btn" value="添加" ng-click="add($event)">
         <label class="sp_label" ng-bind="resultTip"></label>
     </form>

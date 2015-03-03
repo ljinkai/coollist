@@ -123,6 +123,17 @@ a {
   width: 100%;
   margin: 10px 0px;
 }
+.sb_url_par {
+  position: relative;
+}
+.sb_loader {
+  padding: 10px;
+  position: absolute;
+  right: -25px;
+  top: 20px;
+  background: url('../images/icons/icon_loader.gif') no-repeat left top;
+  background-size: 20px;
+}
 .fd_msg {
   width: 100%;
 }

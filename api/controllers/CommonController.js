@@ -7,6 +7,11 @@ var AV = require('avoscloud-sdk').AV;
 var sc = require('node-schedule');
 var sails = require('sails');
 var log = sails.log;
+//var $ = require("jquery")(jsdom.jsdom().createWindow());
+//var http = require('http');
+var jsdom = require("jsdom");
+
+
 
 var avs = require('../services/AVService.js');
 var randtoken = require('rand-token');
@@ -43,6 +48,22 @@ module.exports = {
                 // error is a AV.Error with an error code and description.
                 console.log('Failed to create new object, with error code: ' + error.description);
                 var result = {"_STATE_":"400","MSG":"ERROR"};
+                res.json(result);
+            }
+        });
+    },
+    parseHtmlTitle : function(req,res) {
+        var url = req.param("url");
+        jsdom.env({
+            url: url,
+            scripts: ["http://code.jquery.com/jquery.js"],
+            done: function (errors, window) {
+                var $ = window.$;
+                var title = "";
+                $("title").each(function() {
+                    title = $(this).text();
+                });
+                var result = {"_STATE_":"200","MSG":"成功","DATA":{"title":title}};
                 res.json(result);
             }
         });

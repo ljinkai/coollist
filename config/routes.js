@@ -42,6 +42,7 @@ module.exports.routes = {
     '/@rss' : "SpiderController.rssParse",
     '/@rss-test' : "SpiderController.excuteRssInsert",
     '/@feedback' : "CommonController.addFeedback",
+    'post /@title-get' : "CommonController.parseHtmlTitle",
     'post /@login' : "CommonController.login",
     'post /@register' : "CommonController.register",
     'post /@addWeb': "CommonController.addLink",
