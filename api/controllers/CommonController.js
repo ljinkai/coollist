@@ -7,9 +7,8 @@ var AV = require('avoscloud-sdk').AV;
 var sc = require('node-schedule');
 var sails = require('sails');
 var log = sails.log;
-//var $ = require("jquery")(jsdom.jsdom().createWindow());
-//var http = require('http');
-var jsdom = require("jsdom");
+var http = require('http');
+var cheerio = require("cheerio");
 
 
 
@@ -54,14 +53,26 @@ module.exports = {
     },
     parseHtmlTitle : function(req,res) {
         var url = req.param("url");
-        jsdom.env({
-            url: url,
-            scripts: ["http://code.jquery.com/jquery.js"],
-            done: function (errors, window) {
-                var $ = window.$;
+
+        function download(url, callback) {
+            http.get(url, function(res) {
+                var data = "";
+                res.on('data', function (chunk) {
+                    data += chunk;
+                });
+                res.on("end", function() {
+                    callback(data);
+                });
+            }).on("error", function() {
+                    callback(null);
+                });
+        }
+        download(url, function(data) {
+            if (data) {
+                var $ = cheerio.load(data);
                 var title = "";
-                $("title").each(function() {
-                    title = $(this).text();
+                $("title").each(function(i, e) {
+                    title = $(e).text();
                 });
                 var result = {"_STATE_":"200","MSG":"成功","DATA":{"title":title}};
                 res.json(result);
