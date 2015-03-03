@@ -2,12 +2,12 @@
     <form class="sp_form">
         <label>登录</label>
         <input type="text" id="lg_email" class="input-com" placeholder="邮箱"/>
-        <input type="password" id="lg_pwd" class="input-com" placeholder="密码"/>
+        <input type="password" id="lg_pwd" class="input-com" placeholder="密码" ng-keypress="doLoginKeyPress($event)"/>
         <input type="button" class="sp_btn" value="登录" ng-click="login($event)">
         <label>创建新账户</label>
         <input type="text" id="rg_nickname" class="input-com" placeholder="昵称"/>
         <input type="text" id="rg_email" class="input-com" placeholder="邮箱"/>
-        <input type="password" id="rg_pwd" class="input-com" placeholder="密码"/>
+        <input type="password" id="rg_pwd" class="input-com" placeholder="密码" ng-keypress="doSignKeyPress($event)"/>
         <input type="button" class="sp_btn" value="创建" ng-click="register($event)">
     </form>
 </div>

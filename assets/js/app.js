@@ -222,5 +222,16 @@ angular.module("app",[])
                         }
                     });
                 }
+                // keypress
+                $scope.doLoginKeyPress = function(event) {
+                    if (event.keyCode == 13) {
+                        $scope.login(event);
+                    }
+                };
+                $scope.doSignKeyPress = function(event) {
+                    if (event.keyCode == 13) {
+                        $scope.register(event);
+                    }
+                };
             }]);
 
