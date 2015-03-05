@@ -98,6 +98,7 @@ function timeAgo(timeStr,timeFlag) {
 }
 
 
+var webSite = AV.Object.extend("WebSite");
 
 module.exports = {
     home: function (req, res) {
@@ -105,8 +106,10 @@ module.exports = {
             return timeAgo(time,true);
         };
 
-        avs.find(req,"WebSite").then(function(resArray) {
-            res.view("homepage",{"results":resArray,"next":{"skip":30}});
+        avs.findHome(req,"WebSite").then(function(result) {
+            var resArray = result.listArray;
+            var ups = result.ups;
+            res.view("homepage",{"results":resArray,"ups":ups,"next":{"skip":30}});
         },function(error) {
             res.notFound();
         });
@@ -116,11 +119,38 @@ module.exports = {
         ejs.filters.timeago = function(time) {
             return timeAgo(time,true);
         };
-        avs.find(req,"WebSite",params).then(function(resArray) {
+        avs.findHome(req,"WebSite",params).then(function(result) {
             var skip = parseInt(req.param("skip")) + limit;
-            res.view("homepage",{"results":resArray,"next":{"skip":skip}});
+            var resArray = result.listArray;
+            var ups = result.ups;
+            res.view("homepage",{"results":resArray,"ups":ups,"next":{"skip":skip}});
         },function(error) {
             res.notFound();
+        });
+    },
+    duang: function (req, res) {
+        var userId = req.param("userId");
+        var linkId = req.param("linkId");
+
+        avs.add(req,"WebUp",{"linkId":linkId,"userId":userId}).then(function(data) {
+            var result = {"_STATE_":"200","MSG":"OK"};
+            var query = new AV.Query(webSite);
+            query.get(linkId, {
+                success: function(gameScore) {
+                    // The object was retrieved successfully.
+                    gameScore.increment("up");
+                    gameScore.save();
+                    res.json(result);
+                },
+                error: function(object, error) {
+                    var result = {"_STATE_":"400","MSG":"ERROR"};
+                    res.json(result);
+                }
+            });
+        },function(error) {
+            console.log("print::" + error);
+            var result = {"_STATE_":"400","MSG":"ERROR"};
+            res.json(result);
         });
     },
     about: function (req, res) {

@@ -7,6 +7,7 @@ var AV = require('avoscloud-sdk').AV;
 var Q = require('q');
 
 
+var webUp = AV.Object.extend("WebUp");
 
 module.exports = {
     add: function (req, object, data) {
@@ -42,19 +43,74 @@ module.exports = {
         }
         query.limit(limit); // limit to at most 10 results
         query.descending("updatedAt");
+
         query.find({
             success: function(results) {
                 // Do something with the returned AV.Object values
                 var resArray = [];
+                var ups = [];
                 for (var i = 0; i < results.length; i++) {
                     var object = results[i];
                     var temp = {"url":object.get('url'),"title":object.get('title'),"nick":object.get('nick'),
-                        "user":object.get('user'),"time":object.createdAt};
-//                    console.log(JSON.stringify(object) + object.title + ' - ' + object.get('title'));
+                        "up":object.get('up'),"user":object.get('user'),"time":object.createdAt,"id":object.id};
+                    ups.push(object.get('user'));
                     resArray.push(temp);
                 }
-                deferred.resolve(resArray);
+            },
+            error: function(error) {
+                console.log("Error: " + error.code + " " + error.message);
+                deferred.reject(error);
 
+            }
+        });
+        return deferred.promise;
+
+    },
+    findHome: function (req, object, params) {
+        var deferred = Q.defer();
+        var GameScore = AV.Object.extend(object);
+        var query = new AV.Query(GameScore);
+        if (params && params.skip) {
+            query.skip(params.skip);
+        }
+        var limit = 30;
+        if (params && params.limit) {
+            limit = params.limit;
+        }
+        query.limit(limit); // limit to at most 10 results
+        query.descending("updatedAt");
+
+        query.find({
+            success: function(results) {
+                // Do something with the returned AV.Object values
+                var obj = {};
+                var resArray = [];
+                var ups = [];
+                for (var i = 0; i < results.length; i++) {
+                    var object = results[i];
+                    var temp = {"url":object.get('url'),"title":object.get('title'),"nick":object.get('nick'),
+                        "up":object.get('up'),"user":object.get('user'),"time":object.createdAt,"id":object.id};
+                    ups.push(object.get('user'));
+                    resArray.push(temp);
+                }
+                obj.listArray = resArray;
+                var userQuery = new AV.Query(webUp);
+                userQuery.containedIn("userId",ups);
+                userQuery.find({
+                    success: function(ups) {
+                        var upsArray = [];
+                        for (var i = 0; i < ups.length; i++) {
+                            var object = ups[i];
+                            upsArray.push(object.get("linkId"));
+                        }
+                        obj.ups = upsArray;
+                        deferred.resolve(obj);
+                    },
+                    error: function(error) {
+                        console.log("Error: user.find " + error.code + " " + error.message);
+                        deferred.reject(error);
+                    }
+                });
             },
             error: function(error) {
                 console.log("Error: " + error.code + " " + error.message);

@@ -46,6 +46,7 @@ module.exports.routes = {
     'post /@login' : "CommonController.login",
     'post /@register' : "CommonController.register",
     'post /@addWeb': "CommonController.addLink",
+    'post /@duang': "HomeController.duang",
     'get /next/': "HomeController.next",
     'get /about': "HomeController.about",
     'get /feedback': "HomeController.feedback",

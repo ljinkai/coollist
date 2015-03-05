@@ -5,7 +5,24 @@ angular.module("app",[])
     .controller('HomeController',
         ['$rootScope', '$scope','$http',
             function($rootScope, $scope,$http) {
-
+                function getCookie(key) {
+                    var appStr = $.cookie("__clh");
+                    if (appStr) {
+                        appStr = JSON.parse(appStr);
+                        return appStr[key];
+                    }
+                }
+                $scope.duang = function(event,linkId) {
+                    var userId = getCookie("id");
+                    var data = {"linkId":linkId,"userId":userId};
+                    $http.post("/@duang", data).then(function(res) {
+                        if (res.data && res.data._STATE_ == "200") {
+                            $("#" + linkId + "_up").removeClass("ls_up_img");
+                            var count = parseInt($("#" + linkId + "_up_count").text()) + 1;
+                            $("#" + linkId + "_up_count").text(count)
+                        }
+                    });
+                }
             }])
     .controller('NavController',
         ['$rootScope', '$scope','$http',
@@ -83,6 +100,7 @@ angular.module("app",[])
                         }
                     },500);
                 });
+                alert(getCookie("id"));
                 $scope.add = function() {
                     var url = $(".sp_url").val();
                     var name = $(".sp_name").val();

@@ -91,10 +91,39 @@ a {
   max-width: 30px;
   text-align: right;
 }
+.ls_title {
+  padding-left: 8px;
+}
+.ls_up {
+  float: left;
+  width: 10px;
+  height: 10px;
+  margin: 5px 5px 0px 0px;
+  display: block;
+}
+.ls_up_img {
+  width: 10px;
+  height: 10px;
+  display: block;
+  cursor: pointer;
+  background: url("../images/icons/grayarrow.gif") no-repeat;
+}
+.ls_up:hover {
+  opacity: 0.8;
+}
 .ls_a {
   display: block;
   width: auto;
   float: left;
+}
+.ls_sub {
+  width: 100%;
+  clear: both;
+  height: 12px;
+  line-height: 12px;
+  font-size: 12px;
+  margin-bottom: 5px;
+  margin-left: 15px;
 }
 .ls_more {
   margin-left: 30px;

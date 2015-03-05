@@ -106,7 +106,7 @@ module.exports = {
                 if (results) {
                     var token = results.get("sessionToken");
                     var nickName = results.get("nickName");
-                    var userId = results.get("objectId");
+                    var userId = results.id;
                     var result = {"_STATE_":"200","MSG":"成功登陆","DATA":{"nick":nickName,"email":email,"token":token,"id":userId}};
                     res.json(result);
                 } else {
