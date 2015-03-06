@@ -8,11 +8,13 @@ var sc = require('node-schedule');
 var sails = require('sails');
 var log = sails.log;
 var http = require('http');
+var request = require('request');
 var cheerio = require("cheerio");
 
 
 
 var avs = require('../services/AVService.js');
+var emailServ = require('../services/EmailService.js');
 var randtoken = require('rand-token');
 AV.initialize("e4wnmd3z7unk5wxu3jm3579abpvopi9bb2e7fgsmqfl3zsqk", "4fktyp6v43v3n1vgke5771tovv62xuxsatnux7weq4b9kqwz");
 
@@ -55,17 +57,11 @@ module.exports = {
         var url = req.param("url");
 
         function download(url, callback) {
-            http.get(url, function(res) {
-                var data = "";
-                res.on('data', function (chunk) {
-                    data += chunk;
-                });
-                res.on("end", function() {
-                    callback(data);
-                });
-            }).on("error", function() {
-                    callback(null);
-                });
+            request(url, function (error, response, html) {
+                if (!error && response.statusCode == 200) {
+                    callback(html);
+                }
+            });
         }
         download(url, function(data) {
             if (data) {
@@ -132,6 +128,13 @@ module.exports = {
         },function(error) {
             var result = {"_STATE_":"400","MSG":"ERROR"};
             res.json(result);
+        });
+    },
+    emailSend : function(req, res) {
+        emailServ.send(req,res).then(function(data) {
+            console.log("ok send email");
+        },function(error) {
+            console.log("send email error");
         });
     }
 };

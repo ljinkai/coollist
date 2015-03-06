@@ -100,7 +100,6 @@ angular.module("app",[])
                         }
                     },500);
                 });
-                alert(getCookie("id"));
                 $scope.add = function() {
                     var url = $(".sp_url").val();
                     var name = $(".sp_name").val();
