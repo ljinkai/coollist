@@ -9,6 +9,20 @@ var Q = require('q');
 
 var webUp = AV.Object.extend("WebUp");
 
+var getClientCookie = function(req) {
+    // 获得客户端的Cookie
+    var Cookies = {};
+    req.headers.cookie && req.headers.cookie.split(';').forEach(function( Cookie ) {
+        var parts = Cookie.split('=');
+        Cookies[ parts[ 0 ].trim() ] = ( parts[ 1 ] || '' ).trim();
+    });
+    var obj = {};
+    if (Cookies["__clh"]) {
+        obj = JSON.parse(decodeURIComponent(Cookies["__clh"]));
+    }
+    return obj;
+}
+
 module.exports = {
     add: function (req, object, data) {
         var deferred = Q.defer();
@@ -80,6 +94,10 @@ module.exports = {
         query.limit(limit); // limit to at most 10 results
         query.descending("updatedAt");
 
+        //request cookie
+        var cook = getClientCookie(req);
+        var loginUser = cook['id'];
+
         query.find({
             success: function(results) {
                 // Do something with the returned AV.Object values
@@ -97,11 +115,13 @@ module.exports = {
                 var userQuery = new AV.Query(webUp);
                 userQuery.containedIn("userId",ups);
                 userQuery.find({
-                    success: function(ups) {
+                    success: function(upsItems) {
                         var upsArray = [];
-                        for (var i = 0; i < ups.length; i++) {
-                            var object = ups[i];
-                            upsArray.push(object.get("linkId"));
+                        for (var i = 0; i < upsItems.length; i++) {
+                            var object = upsItems[i];
+                            if (object.get("userId") == loginUser) {
+                                upsArray.push(object.get("linkId"));
+                            }
                         }
                         obj.ups = upsArray;
                         deferred.resolve(obj);

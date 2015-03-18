@@ -121,17 +121,42 @@ module.exports = {
         var email = req.param("email");
         var pwd = req.param("pwd");
         var token = randtoken.generate(32);
-        avs.add(req,"RegisterUser",{"nickName":nickName,"email":email,"password":pwd,"sessionToken":token}).then(function(data) {
-            var userId = data.id;
-            var result = {"_STATE_":"200","MSG":"注册成功","DATA":{"nick":nickName,"email":email,"token":token,"id":userId}};
-            res.json(result);
-        },function(error) {
-            var result = {"_STATE_":"400","MSG":"ERROR"};
-            res.json(result);
+
+        var RgUser = AV.Object.extend("RegisterUser");
+        var query = new AV.Query(RgUser);
+        query.equalTo("email", email);
+        query.first({
+            success: function(results) {
+                if (results) {
+                    var result = {"_STATE_":"400","MSG":"此邮箱已经存在!"};
+                    res.json(result);
+                } else {
+                    avs.add(req,"RegisterUser",{"nickName":nickName,"email":email,"password":pwd,"sessionToken":token}).then(function(data) {
+                        emailServ.send(email).then(function(eData) {
+                            var userId = data.id;
+                            var result = {"_STATE_":"200","MSG":"注册成功","DATA":{"nick":nickName,"email":email,"token":token,"id":userId}};
+                            res.json(result);
+                        },function(error) {
+                            console.log("send email error");
+                            var result = {"_STATE_":"400","MSG":"ERROR"};
+                            res.json(result);
+                        });
+                    },function(error) {
+                        var result = {"_STATE_":"400","MSG":"ERROR"};
+                        res.json(result);
+                    });
+                }
+            },
+            error: function(error) {
+                console.log("print::3333");
+
+                var result = {"_STATE_":"400","MSG":"注册出现问题！"};
+                res.json(result);
+            }
         });
     },
-    emailSend : function(req, res) {
-        emailServ.send(req,res).then(function(data) {
+    emailSend : function(email) {
+        emailServ.send(email).then(function(data) {
             console.log("ok send email");
         },function(error) {
             console.log("send email error");

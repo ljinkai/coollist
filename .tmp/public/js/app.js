@@ -14,14 +14,18 @@ angular.module("app",[])
                 }
                 $scope.duang = function(event,linkId) {
                     var userId = getCookie("id");
-                    var data = {"linkId":linkId,"userId":userId};
-                    $http.post("/@duang", data).then(function(res) {
-                        if (res.data && res.data._STATE_ == "200") {
-                            $("#" + linkId + "_up").removeClass("ls_up_img");
-                            var count = parseInt($("#" + linkId + "_up_count").text()) + 1;
-                            $("#" + linkId + "_up_count").text(count)
-                        }
-                    });
+                    if (userId && (userId.length > 0)) {
+                        var data = {"linkId":linkId,"userId":userId};
+                        $http.post("/@duang", data).then(function(res) {
+                            if (res.data && res.data._STATE_ == "200") {
+                                $("#" + linkId + "_up").removeClass("ls_up_img");
+                                var count = parseInt($("#" + linkId + "_up_count").text()) + 1;
+                                $("#" + linkId + "_up_count").text(count)
+                            }
+                        });
+                    } else {
+                        window.location.href = "/login";
+                    }
                 }
             }])
     .controller('NavController',
@@ -231,11 +235,12 @@ angular.module("app",[])
                     }
                     var data = {"email":email,"pwd":pwd,"nickname":nickName};
                     $http.post("/@register", data).then(function(res) {
-                        console.log("print::" + JSON.stringify(res));
                         if (res.data && res.data._STATE_ == "200") {
                             $scope.resultTip = res.data.MSG;
                             $.cookie("__clh",JSON.stringify(res.data.DATA),{"path":"/","expires":730});
                             $scope._redirect();
+                        } else if (res.data){
+                            alert(res.data.MSG);
                         }
                     });
                 }
