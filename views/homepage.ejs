@@ -1,9 +1,10 @@
 <div class="ls_body" ng-controller="HomeController">
+    <table>
     <% results.forEach(function(item, index){ %>
     <% numb = next.skip - 30 + index + 1%>
-    <div class="row">
-        <div class="ls_num col-xs-1"><%= numb %>.</div>
-        <div class="ls_title col-xs-10">
+        <tr class="row ls_row">
+        <td class="ls_num "><%= numb %>.<div class="ls_num_space">&nbsp;</div></td>
+        <td class="ls_title">
             <span class="ls_up">
                 <% if (ups.join(",").indexOf(item.id) == -1) {%>
                     <span class="ls_up_img" id="<%= item.id %>_up" ng-click="duang($event,'<%= item.id %>')"></span>
@@ -17,9 +18,10 @@
                 <%}%>
                 <span><%=: item.time | timeago %></span>
             </div>
-        </div>
-    </div>
+        </td>
+        </tr>
     <% }) %>
+    </table>
     <% if (results.length >= 30) { %>
         <div class="ls_more"><a href="/next/?skip=<%= next.skip %>" target="_self">更多</a></div>
     <%}%>

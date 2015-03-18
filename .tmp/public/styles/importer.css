@@ -86,10 +86,18 @@ a {
   float: left;
   width: 100%;
 }
+.ls_row {
+  margin-left: 0px;
+}
 .ls_num {
   color: #828282;
-  max-width: 30px;
+  height: 42px;
   text-align: right;
+}
+.ls_num_space {
+  height: 12px;
+  line-height: 12px;
+  font-size: 12px;
 }
 .ls_title {
   padding-left: 8px;
