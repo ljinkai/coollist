@@ -108,12 +108,13 @@ module.exports = {
                     var object = results[i];
                     var temp = {"url":object.get('url'),"title":object.get('title'),"nick":object.get('nick'),
                         "up":object.get('up'),"user":object.get('user'),"time":object.createdAt,"id":object.id};
-                    ups.push(object.get('user'));
+                    ups.push(object.id);
                     resArray.push(temp);
                 }
+
                 obj.listArray = resArray;
                 var userQuery = new AV.Query(webUp);
-                userQuery.containedIn("userId",ups);
+                userQuery.containedIn("linkId",ups);
                 userQuery.find({
                     success: function(upsItems) {
                         var upsArray = [];
