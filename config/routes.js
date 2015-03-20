@@ -33,6 +33,7 @@ module.exports.routes = {
   ***************************************************************************/
 
     '/': "HomeController.home",
+    '/new': "HomeController.new",
     '/submit': {
         view: 'submit'
     },

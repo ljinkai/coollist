@@ -92,7 +92,12 @@ module.exports = {
             limit = params.limit;
         }
         query.limit(limit); // limit to at most 10 results
-        query.descending("updatedAt");
+        if (params && params.new) {
+            console.log("print:new:");
+            query.descending("createdAt");
+        } else {
+            query.descending("updatedAt");
+        }
 
         //request cookie
         var cook = getClientCookie(req);

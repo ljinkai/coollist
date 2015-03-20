@@ -22,8 +22,13 @@
         </tr>
     <% }) %>
     </table>
-    <% if (results.length >= 30) { %>
-        <div class="ls_more"><a href="/next/?skip=<%= next.skip %>" target="_self">更多</a></div>
+    <% if (results.length >= 30) {
+       ext = "/next/?skip=" + next.skip;
+        if (next && (next.query == "new")) {
+            ext += "&query=new";
+        }
+    %>
+        <div class="ls_more"><a href="<%= ext%>" target="_self">更多</a></div>
     <%}%>
 </div>
 
