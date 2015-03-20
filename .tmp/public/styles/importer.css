@@ -51,6 +51,12 @@ a {
   margin-right: 10px;
   font-weight: normal;
 }
+.nav_item-active {
+  color: white;
+}
+.nav_item-active a {
+  color: white;
+}
 .nav_item-main {
   margin-right: 16px;
 }

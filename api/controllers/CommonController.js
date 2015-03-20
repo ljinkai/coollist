@@ -78,9 +78,7 @@ module.exports = {
     addFeedback : function(req,res) {
         var msg = req.param("msg");
         var email = req.param("email");
-        console.log("print::" + email);
         avs.add(req,"FeedBack",{"msg":msg,"email":email}).then(function(data) {
-            console.log("print::" + JSON.stringify(data));
                 var result = {"_STATE_":"200","MSG":"感谢,我们会认真对待您的反馈"};
                 res.json(result);
             },function(error) {

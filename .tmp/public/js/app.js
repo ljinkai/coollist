@@ -45,6 +45,12 @@ angular.module("app",[])
                     if ($scope.userName && $scope.userName.length > 0) {
                         $scope.loginState = true;
                     }
+                    var loc = window.location.href;
+                    if (loc.indexOf("/new") > 0) {
+                        $scope.nav_item = "new";
+                    } else if (loc.indexOf("/submit") > 0) {
+                        $scope.nav_item = "submit";
+                    }
                 }
                 $scope._initUser();
                 $scope.logout = function() {

@@ -93,7 +93,6 @@ module.exports = {
         }
         query.limit(limit); // limit to at most 10 results
         if (params && params.new) {
-            console.log("print:new:");
             query.descending("createdAt");
         } else {
             query.descending("updatedAt");
