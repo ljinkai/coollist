@@ -11,20 +11,12 @@ var FeedParser = require('feedparser')
     , request = require('request');
 var async = require('async');
 
-var rssArray = [
-    "http://cnbeta.feedsportal.com/c/34306/f/624776/index.rss",
-    "http://www.pingwest.com/feed/",
-    "http://techcrunch.cn/feed/"
-];
-
-
 module.exports = {
-
-    excuteRssInsert : function() {
+    excuteRssInsert : function(rssArray,num) {
         async.each(rssArray, function(url, callback) {
             // Perform operation on file here.
             setTimeout(function(){
-                sds.rssParse(url, 10).then(function(result) {
+                sds.rssParse(url, num).then(function(result) {
                     callback();
                 },function(error) {
                     console.log('excuteRssInsert: ' + error);
