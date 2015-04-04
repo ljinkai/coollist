@@ -158,7 +158,6 @@ angular.module("app",[])
                     $scope.resultTip = "发送中..";
                     var data = {"msg":msg,"email":email};
                     $http.post("/@feedback", data).then(function(res) {
-                        console.log("print::" + JSON.stringify(res));
                         if (res.data && res.data._STATE_ == "200") {
                             $scope.resultTip = res.data.MSG;
                             $scope._resetForm();
@@ -182,7 +181,6 @@ angular.module("app",[])
 
                     var data = {"src":url};
                     $http.post("/@rss", data).then(function(res) {
-                        console.log("print::" + JSON.stringify(res));
                         if (res.data && res.data._STATE_ == "200") {
                             $scope.resultTip = res.data.MSG;
                             $scope._resetForm();
@@ -282,7 +280,6 @@ angular.module("app",[])
                         var itemId = $scope.id;
                         var nick = getCookie("nick");
                         var data = {"content":con,"userId":userId,"itemId":itemId,"nick":nick};
-                        console.log("print::" + JSON.stringify(data));
                         $http.post("/@comment", data).then(function(res) {
                             if (res.data && res.data._STATE_ == "200") {
                                 $scope.getComments();
@@ -295,11 +292,8 @@ angular.module("app",[])
                 $scope.getComments = function(event) {
                         $scope.id = $(".item_title").data("id");
                         var data = {"itemId":$scope.id};
-                        console.log("print::" + JSON.stringify(data));
                         $http.post("/@getComments", data).then(function(res) {
                             if (res.data && res.data._STATE_ == "200") {
-                                console.log("print::" + JSON.stringify(res.DATA));
-
                                 $scope.comments = res.data.DATA;
                             }
                         });
