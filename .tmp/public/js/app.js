@@ -283,6 +283,7 @@ angular.module("app",[])
                         $http.post("/@comment", data).then(function(res) {
                             if (res.data && res.data._STATE_ == "200") {
                                 $scope.getComments();
+                                $("#content").val("");
                             }
                         });
                     } else {
