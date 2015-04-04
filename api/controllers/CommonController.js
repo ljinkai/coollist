@@ -159,6 +159,29 @@ module.exports = {
         },function(error) {
             console.log("send email error");
         });
+    },
+    addComment : function(req,res) {
+        var comment = AV.Object.extend("Comment");
+        var gameScore = new comment();
+        var con = req.param("content");
+        var id = req.param("userId");
+        gameScore.set("content", con);
+        gameScore.set("addUser", id);
+        gameScore.save(null, {
+            success: function(gameScore) {
+                // Execute any logic that should take place after the object is saved.
+                console.log('New object created with objectId: ' + gameScore.id);
+                var result = {"_STATE_":"200","MSG":"添加成功"};
+                res.json(result);
+            },
+            error: function(gameScore, error) {
+                // Execute any logic that should take place if the save fails.
+                // error is a AV.Error with an error code and description.
+                console.log('Failed to create new object, with error code: ' + error.description);
+                var result = {"_STATE_":"400","MSG":"ERROR"};
+                res.json(result);
+            }
+        });
     }
 };
 

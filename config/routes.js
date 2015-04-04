@@ -48,11 +48,15 @@ module.exports.routes = {
     'post /@register' : "CommonController.register",
     'post /@addWeb': "CommonController.addLink",
     'post /@duang': "HomeController.duang",
+    'post /@comment': "CommentController.addComment",
+    'post /@getcomments': "CommentController.getComments",
     'get /@email-send': "CommonController.emailSend",
     'get /next/': "HomeController.next",
     'get /about': "HomeController.about",
     'get /feedback': "HomeController.feedback",
-    'get /login': "HomeController.login"
+    'get /login': "HomeController.login",
+    'get /item/:id': "CommentController.item",
+    'get /item/:id/*': "CommentController.item"
 
   /***************************************************************************
   *                                                                          *

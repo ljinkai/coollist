@@ -139,6 +139,9 @@ a {
   margin-bottom: 5px;
   margin-left: 15px;
 }
+.ls_comment {
+  color: #828282;
+}
 .ls_more {
   margin-left: 30px;
   height: 30px;
@@ -187,6 +190,49 @@ a {
   width: 100%;
   height: 36px;
   margin: 5px 0px;
+}
+.item_page {
+  padding: 0px 12px 30px 12px;
+}
+.item_title {
+  width: 100%;
+  display: block;
+  height: 40px;
+  line-height: 40px;
+}
+.item_line {
+  width: 100%;
+  display: block;
+}
+.item_com {
+  margin-top: 12px;
+}
+.item_sub {
+  width: 100%;
+  clear: both;
+  height: 12px;
+  line-height: 12px;
+  font-size: 12px;
+  margin-bottom: 10px;
+  color: #828282;
+}
+.item_comment_a {
+  color: #828282;
+}
+.item_li {
+  list-style: none;
+  font-size: 12px;
+  line-height: 20px;
+  margin-bottom: 6px;
+}
+.item_nick {
+  color: #828282;
+}
+.itemInput {
+  width: 500px;
+}
+.itemBtn {
+  width: 100px;
 }
 .footer {
   height: 50px;

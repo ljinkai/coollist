@@ -4,8 +4,17 @@
  */
 var ejs = require('ejs');
 var AV = require('avoscloud-sdk').AV;
+var sc = require('node-schedule');
+var sails = require('sails');
+var log = sails.log;
+var http = require('http');
+var request = require('request');
+var cheerio = require("cheerio");
+
+
+
 var avs = require('../services/AVService.js');
-var limit = 30;
+AV.initialize("e4wnmd3z7unk5wxu3jm3579abpvopi9bb2e7fgsmqfl3zsqk", "4fktyp6v43v3n1vgke5771tovv62xuxsatnux7weq4b9kqwz");
 function formatDate(now) {
     now = new Date(now);
     var year=now.getFullYear();
@@ -97,92 +106,74 @@ function timeAgo(timeStr,timeFlag) {
     return str;
 }
 
-
-var webSite = AV.Object.extend("WebSite");
-
 module.exports = {
-    home: function (req, res) {
+    item: function (req, res) {
+        res.locals.layout = "itemLayout";
         ejs.filters.timeago = function(time) {
             return timeAgo(time,true);
         };
-
-        avs.findHome(req,"WebSite").then(function(result) {
-            var resArray = result.listArray;
-            var ups = result.ups;
-            res.view("homepage",{"results":resArray,"ups":ups,"next":{"skip":30}});
+        var id = req.param("id");
+        avs.first(req,"WebSite","objectId",id).then(function(object) {
+            var temp = {"url":object.get('url'),"title":object.get('title'),"nick":object.get('nick'),
+                "up":object.get('up'),"user":object.get('user'),"time":object.createdAt,"id":object.id};
+            res.view("item",{"result":temp});
         },function(error) {
             res.notFound();
         });
     },
-    new: function (req, res) {
-        ejs.filters.timeago = function(time) {
-            return timeAgo(time,true);
-        };
-
-        avs.findHome(req,"WebSite",{"new":true}).then(function(result) {
-            var resArray = result.listArray;
-            var ups = result.ups;
-            res.view("homepage",{"results":resArray,"ups":ups,"next":{"skip":30,"query":"new"}});
-        },function(error) {
-            res.notFound();
-        });
-    },
-    next: function (req, res) {
-        var params = {"skip":req.param("skip")};
-        ejs.filters.timeago = function(time) {
-            return timeAgo(time,true);
-        };
-        var query = req.param("query");
-        if (query && (query == "new")) {
-            params["new"] = true;
-        }
-        avs.findHome(req,"WebSite",params).then(function(result) {
-            var skip = parseInt(req.param("skip")) + limit;
-            var resArray = result.listArray;
-            var ups = result.ups;
-            var resData = {"results":resArray,"ups":ups,"next":{"skip":skip}};
-            if (query && (query == "new")) {
-                resData.next["query"] = "new";
+    addComment : function(req,res) {
+        var comment = AV.Object.extend("Comment");
+        var gameScore = new comment();
+        var con = req.param("content");
+        var id = req.param("userId");
+        var itemId = req.param("itemId");
+        var nick = req.param("nick");
+        gameScore.set("content", con);
+        gameScore.set("userId", id);
+        gameScore.set("nick", nick);
+        gameScore.set("itemId", itemId);
+        gameScore.save(null, {
+            success: function(gameScore) {
+                // Execute any logic that should take place after the object is saved.
+                var result = {"_STATE_":"200","MSG":"添加成功"};
+                res.json(result);
+            },
+            error: function(gameScore, error) {
+                // Execute any logic that should take place if the save fails.
+                // error is a AV.Error with an error code and description.
+                console.log('Failed to create new object, with error code: ' + error.description);
+                var result = {"_STATE_":"400","MSG":"ERROR"};
+                res.json(result);
             }
-            res.view("homepage",resData);
-        },function(error) {
-            res.notFound();
         });
     },
-    duang: function (req, res) {
-        var userId = req.param("userId");
-        var linkId = req.param("linkId");
+    getComments : function(req,res) {
+        var comment = AV.Object.extend("Comment");
+        var itemId = req.param("itemId");
+        var query = new AV.Query(comment);
 
-        avs.add(req,"WebUp",{"linkId":linkId,"userId":userId}).then(function(data) {
-            var result = {"_STATE_":"200","MSG":"OK"};
-            var query = new AV.Query(webSite);
-            query.get(linkId, {
-                success: function(gameScore) {
-                    // The object was retrieved successfully.
-                    gameScore.increment("up");
-                    gameScore.save();
-                    res.json(result);
-                },
-                error: function(object, error) {
-                    var result = {"_STATE_":"400","MSG":"ERROR"};
-                    res.json(result);
+        query.descending("updatedAt");
+        query.equalTo("itemId", itemId);
+        query.find({
+            success: function(results) {
+                // Do something with the returned AV.Object values
+                var resArray = [];
+                for (var i = 0; i < results.length; i++) {
+                    var object = results[i];
+                    var temp = {"content":object.get('content'),"nick":object.get('nick'),
+                        "user":object.get('userId'),"time":object.createdAt,"id":object.id};
+                    resArray.push(temp);
                 }
-            });
-        },function(error) {
-            console.log("print::" + error);
-            var result = {"_STATE_":"400","MSG":"ERROR"};
-            res.json(result);
+                var result = {"_STATE_":"200","MSG":"添加成功","DATA":resArray};
+                res.json(result);
+            },
+            error: function(error) {
+                console.log("Error: " + error.code + " " + error.message);
+                var result = {"_STATE_":"400","MSG":"ERROR"};
+                res.json(result);
+            }
         });
-    },
-    about: function (req, res) {
-        res.view("about");
-    },
-    feedback: function (req, res) {
-        res.view("feedback");
-    },
-    login: function (req, res) {
-        res.view("login");
-    }
 
+    }
 };
 
