@@ -99,6 +99,7 @@ a {
   color: #828282;
   height: 42px;
   text-align: right;
+  vertical-align: top;
 }
 .ls_num_space {
   height: 12px;
@@ -245,4 +246,9 @@ a {
 .foo_item {
   list-style: none;
   margin: 0px 12px;
+}
+@media screen and (max-width: 767px) {
+  .ls_a {
+    width: 92%;
+  }
 }
