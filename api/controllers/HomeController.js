@@ -175,13 +175,17 @@ module.exports = {
         });
     },
     about: function (req, res) {
-        res.view("about");
+        res.view("about",{"extData":{"title":"我们",
+            "desc":"酷粒独白:我们本能中愿意让获得时的欣喜表达出来，即是一刹那，也满足不已。" +
+                "我们就是这样一群人，你也是这样的人，在感受到未知知识的喜悦的一刻,让感动落地，让这份获取得以分享"}});
     },
     feedback: function (req, res) {
-        res.view("feedback");
+        res.view("feedback",{"extData":{"title":"反馈",
+            "desc":"任何的反馈建议都是我们成长的动力,搬砖请砸,飞吻也请砸"}});
     },
     login: function (req, res) {
-        res.view("login");
+        res.view("login",{"extData":{"title":"登录",
+            "desc":"加入酷粒,我们一起分享感动和成长"}});
     }
 
 };

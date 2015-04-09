@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>酷粒 - 分享酷的链接</title>
+      <%
+        tit = "";
+        desc = "";
+        if (typeof extData === "undefined") {
+            tit = "酷粒 - 分享酷的链接";
+            desc = "专注优质链接分享的站点,好玩,有趣,有节操,这是一个安静的存在,脑洞大开的地方";
+        } else {
+            tit = extData.title;
+            desc = extData.desc;
+        }
+        %>
+    <title><%= tit %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="keywords"
         content="酷粒,cool list,coollist,kuli,链接,分享,cool link,share & link,好玩,有趣,有节操">
     <meta name="description"
-        content="专注优质链接分享的站点,好玩,有趣,有节操">
-    <meta property="og:title" content="酷粒 - 分享你的链接"/>
-    <meta property="og:description" content="酷粒,好玩,有趣,有节操"/>
+        content="<%= desc %>">
+    <meta property="og:title" content="<%= tit %>"/>
+    <meta property="og:description" content="<%= desc %>"/>
     <meta property="og:image" content="http://coollist.cn/images/logo.png"/>
     <meta property="og:type" content="item"/>
     <meta property="og:site_name" content="coollist"/>
