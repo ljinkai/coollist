@@ -350,7 +350,7 @@ Weixin.prototype.loop = function(req, res) {
     this.res = res;
 
     var self = this;
-
+console.log("print::weixin loop");
     // 获取XML内容
     var buf = '';
     req.setEncoding('utf8');
