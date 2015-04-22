@@ -58,7 +58,8 @@ module.exports.routes = {
     'get /item/:id': "CommentController.item",
     'get /item/:id/*': "CommentController.item",
 
-    'get /weixin/*': "WeiXinController.signature"
+    'get /weixin/sign': "WeiXinController.signature",
+    'get /weixin/': "WeiXinController.signature"
 
   /***************************************************************************
   *                                                                          *

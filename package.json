@@ -33,7 +33,10 @@
     "cheerio": "0.18.0",
     "nodemailer":"1.3.1",
     "url":"0.10.3",
-    "crypto":"0.0.3"
+    "crypto":"0.0.3",
+    "events":"1.0.2",
+    "sha1":"1.1.0",
+    "xml2js":"0.4.8"
   },
   "scripts": {
     "start": "node app.js",
