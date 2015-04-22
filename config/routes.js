@@ -56,7 +56,9 @@ module.exports.routes = {
     'get /feedback': "HomeController.feedback",
     'get /login': "HomeController.login",
     'get /item/:id': "CommentController.item",
-    'get /item/:id/*': "CommentController.item"
+    'get /item/:id/*': "CommentController.item",
+
+    'get /weixin/*': "WeiXinController.signature"
 
   /***************************************************************************
   *                                                                          *
