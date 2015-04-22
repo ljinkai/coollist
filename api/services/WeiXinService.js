@@ -88,6 +88,7 @@ Weixin.prototype.eventMsg = function(callback) {
  * MsgId	 消息id，64位整型
  */
 Weixin.prototype.parseTextMsg = function() {
+    console.log("print::" + text);
     var msg = {
         "toUserName" : this.data.ToUserName[0],
         "fromUserName" : this.data.FromUserName[0],
@@ -356,10 +357,14 @@ console.log("print::weixin loop");
     req.setEncoding('utf8');
     req.on('data', function(chunk) {
         buf += chunk;
+        console.log("print::weixin data :" + buf);
+
     });
 
     // 内容接收完毕
     req.on('end', function() {
+        console.log("print::weixin end :" + buf);
+
         xml2js.parseString(buf, function(err, json) {
             if (err) {
                 err.status = 400;
