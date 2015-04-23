@@ -138,6 +138,12 @@ module.exports = {
         }
     },
     receive: function(req,res) {
+        // 签名成功
+        if (weixin.checkSignature(req)) {
+            res.send(200, req.query.echostr);
+        } else {
+            res.send(200, 'fail');
+        }
 console.log("print::receive");
             // loop
             weixin.loop(req, res);
