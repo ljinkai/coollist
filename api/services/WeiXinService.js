@@ -355,7 +355,7 @@ console.log("print::weixin loop" + req);
     // 获取XML内容
     var buf = '';
     req.setEncoding('utf8');
-    req.addListener('data', function(chunk) {
+    req.on('data', function(chunk) {
         buf += chunk;
         console.log("print::weixin data :" + buf);
 
