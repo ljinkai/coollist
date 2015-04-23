@@ -351,11 +351,11 @@ Weixin.prototype.loop = function(req, res) {
     this.res = res;
 
     var self = this;
-console.log("print::weixin loop");
+console.log("print::weixin loop" + req);
     // 获取XML内容
     var buf = '';
     req.setEncoding('utf8');
-    req.on('data', function(chunk) {
+    req.addListener('data', function(chunk) {
         buf += chunk;
         console.log("print::weixin data :" + buf);
 
