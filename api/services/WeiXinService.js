@@ -352,31 +352,34 @@ Weixin.prototype.loop = function(req, res) {
 
     var self = this;
 console.log("print::weixin loop" + req);
-    // 获取XML内容
-    var buf = '';
-    req.setEncoding('utf8');
-    req.on('data', function(chunk) {
-        console.log("print::weixin data :" + buf);
-        buf += chunk;
+//    // 获取XML内容
+//    var buf = '';
+//    req.setEncoding('utf8');
+//    req.on('data', function(chunk) {
+//        console.log("print::weixin data :" + buf);
+//        buf += chunk;
+//
+//    });
+//
+//    // 内容接收完毕
+//    req.on('end', function() {
+//        console.log("print::weixin end :" + buf);
+//
+//        xml2js.parseString(buf, function(err, json) {
+//            if (err) {
+//                err.status = 400;
+//            } else {
+//                req.body = json;
+//            }
+//        });
+//
+//        self.data = req.body.xml;
+//
+//        self.parse();
+//    });
+            self.data = req.rawBody;
 
-    });
-
-    // 内容接收完毕
-    req.on('end', function() {
-        console.log("print::weixin end :" + buf);
-
-        xml2js.parseString(buf, function(err, json) {
-            if (err) {
-                err.status = 400;
-            } else {
-                req.body = json;
-            }
-        });
-
-        self.data = req.body.xml;
-
-        self.parse();
-    });
+    self.parse();
 }
 
 module.exports = new Weixin();
