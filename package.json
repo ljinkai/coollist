@@ -36,7 +36,9 @@
     "crypto":"0.0.3",
     "events":"1.0.2",
     "sha1":"1.1.0",
-    "xml2js":"0.4.8"
+    "xml2js":"0.4.8",
+    "express-xml-bodyparser":"0.0.7",
+    "skipper":"0.5.5 "
   },
   "scripts": {
     "start": "node app.js",

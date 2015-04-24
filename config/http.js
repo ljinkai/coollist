@@ -69,9 +69,22 @@ module.exports.http = {
   *                                                                          *
   ***************************************************************************/
 
-    // bodyParser: require('skipper')
+  bodyParser: function(opts) {
+      // Get an XML parser instance
+      var xmlParser = require('express-xml-bodyparser')(opts);
+      // Get a Skipper instance (handles URLencoded, JSON-encoded and multipart)
+      var skipper = require('skipper')(opts);
+      // Return a custom middleware function
+      return function(req, res, next) {
+          // If it looks like XML, parse it as XML
+          if (req.headers && (req.headers['content-type'] == 'text/xml' || req.headers['content-type'] == 'application/xml')) {
+              return xmlParser(req, res, next);
+          }
+          // Otherwise let Skipper handle it
+          return skipper(req, res, next);
+      };
 
-  // },
+  }
 
   /***************************************************************************
   *                                                                          *

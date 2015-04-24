@@ -356,8 +356,8 @@ console.log("print::weixin loop" + req);
     var buf = '';
     req.setEncoding('utf8');
     req.on('data', function(chunk) {
-        buf += chunk;
         console.log("print::weixin data :" + buf);
+        buf += chunk;
 
     });
 
