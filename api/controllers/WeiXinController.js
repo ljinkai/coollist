@@ -138,7 +138,7 @@ module.exports = {
         }
     },
     receive: function(req,res) {
-            console.log("print::receive" + req.param("ToUserName"));
+            console.log(JSON.stringify(req.headers) + " print::receive" + req.param("ToUserName"));
             // loop
             weixin.loop(req, res);
 
