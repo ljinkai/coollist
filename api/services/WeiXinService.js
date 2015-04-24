@@ -88,7 +88,6 @@ Weixin.prototype.eventMsg = function(callback) {
  * MsgId	 消息id，64位整型
  */
 Weixin.prototype.parseTextMsg = function() {
-    console.log("print::" + text);
     var msg = {
         "toUserName" : this.data.ToUserName[0],
         "fromUserName" : this.data.FromUserName[0],
@@ -377,9 +376,12 @@ console.log("print::weixin loop" + req);
 //
 //        self.parse();
 //    });
-            self.data = req.rawBody;
+    console.log("body:" + req.body);
+    console.log("wow:" + req.rawBody);
+    self.data = req.body.xml;
 
     self.parse();
+
 }
 
 module.exports = new Weixin();
