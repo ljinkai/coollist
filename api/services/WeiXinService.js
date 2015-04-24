@@ -1,7 +1,6 @@
 var sha1 = require('sha1'),
     events = require('events'),
-    emitter = new events.EventEmitter(),
-    xml2js = require('xml2js');
+    emitter = new events.EventEmitter();
 
 // 微信类
 var Weixin = function() {
@@ -348,40 +347,9 @@ Weixin.prototype.sendMsg = function(msg) {
 Weixin.prototype.loop = function(req, res) {
     // 保存res
     this.res = res;
-
     var self = this;
-console.log("print::weixin loop" + req);
-//    // 获取XML内容
-//    var buf = '';
-//    req.setEncoding('utf8');
-//    req.on('data', function(chunk) {
-//        console.log("print::weixin data :" + buf);
-//        buf += chunk;
-//
-//    });
-//
-//    // 内容接收完毕
-//    req.on('end', function() {
-//        console.log("print::weixin end :" + buf);
-//
-//        xml2js.parseString(buf, function(err, json) {
-//            if (err) {
-//                err.status = 400;
-//            } else {
-//                req.body = json;
-//            }
-//        });
-//
-//        self.data = req.body.xml;
-//
-//        self.parse();
-//    });
-    console.log("body:" + req.body);
-    console.log("wow:" + req.rawBody);
     self.data = req.body.xml;
-
     self.parse();
-
 }
 
 module.exports = new Weixin();
