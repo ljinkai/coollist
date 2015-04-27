@@ -26,6 +26,8 @@ var getRecommend = function() {
             str += "</a>";
             str += "\n";
         }
+        str += "\n";
+        str += "<a href='http://coollist.cn'>更多</a>"
         deferred.resolve(str);
     },function(error) {
         deferred.reject(error);
