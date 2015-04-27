@@ -34,7 +34,7 @@ var getRecommend = function() {
 // 监听文本消息
 weixin.textMsg(function(msg) {
     var resMsg = {};
-
+    
     switch (msg.content) {
         case "1" :
             // 返回文本消息
@@ -46,9 +46,9 @@ weixin.textMsg(function(msg) {
                     content : data,
                     funcFlag : 0
                 };
+                weixin.sendMsg(resMsg);
             });
             break;
-
         case "音乐" :
             // 返回音乐消息
             resMsg = {
@@ -61,6 +61,7 @@ weixin.textMsg(function(msg) {
                 HQMusicUrl : "高质量音乐url",
                 funcFlag : 0
             };
+            weixin.sendMsg(resMsg);
             break;
 
         case "图文" :
@@ -95,6 +96,7 @@ weixin.textMsg(function(msg) {
                 articles : articles,
                 funcFlag : 0
             }
+            weixin.sendMsg(resMsg);
             break;
 
         default:
@@ -106,10 +108,10 @@ weixin.textMsg(function(msg) {
                 content : "感谢您的关注，酷粒是一个专注酷链接分享的站点。\n 回复【1】可查看今天推荐",
                 funcFlag : 0
             };
+            weixin.sendMsg(resMsg);
             break;
     }
 
-    weixin.sendMsg(resMsg);
 });
 
 // 监听图片消息
