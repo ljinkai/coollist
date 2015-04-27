@@ -3,6 +3,7 @@
  *
  */
 var ejs = require('ejs');
+var Q = require('q');
 var url = require('url');
 var crypto = require('crypto');
 var avs = require('../services/AVService.js');
