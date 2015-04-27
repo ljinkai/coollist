@@ -20,7 +20,7 @@ var getRecommend = function() {
         var str = "";
         for (var i = 0 ; i < resArray.length; i++) {
             var item = resArray[i];
-            str = (i + 1) + "、 ";
+            str += (i + 1) + "、";
             str += " <a href='http://www.baidu.com'>";
             str += item.title;
             str += "</a>";
