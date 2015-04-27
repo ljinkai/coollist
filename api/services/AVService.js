@@ -12,10 +12,12 @@ var webUp = AV.Object.extend("WebUp");
 var getClientCookie = function(req) {
     // 获得客户端的Cookie
     var Cookies = {};
-    req.headers.cookie && req.headers.cookie.split(';').forEach(function( Cookie ) {
-        var parts = Cookie.split('=');
-        Cookies[ parts[ 0 ].trim() ] = ( parts[ 1 ] || '' ).trim();
-    });
+    if (req) {
+        req.headers.cookie && req.headers.cookie.split(';').forEach(function( Cookie ) {
+            var parts = Cookie.split('=');
+            Cookies[ parts[ 0 ].trim() ] = ( parts[ 1 ] || '' ).trim();
+        });
+    }
     var obj = {};
     if (Cookies["__clh"]) {
         obj = JSON.parse(decodeURIComponent(Cookies["__clh"]));

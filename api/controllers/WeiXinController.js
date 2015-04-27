@@ -5,29 +5,47 @@
 var ejs = require('ejs');
 var url = require('url');
 var crypto = require('crypto');
+var avs = require('../services/AVService.js');
 var weixin = require('../services/WeiXinService.js');
 
 var TOKEN = "coollist1984";
 weixin.token = 'coollist1984';
 
 
+var getRecommend = function() {
+    var deferred = Q.defer();
+    avs.findHome(null,"WebSite",{"limit":10}).then(function(result) {
+        var resArray = result.listArray;
+        var str = "";
+        for (var i = 0 ; i < resArray.length; i++) {
+            var item = resArray[i];
+            str += item.title;
+            str += "\n";
+        }
+        deferred.resolve(str);
+    },function(error) {
+        deferred.reject(error);
+    });
+    return deferred.promise;
+}
+
+
 // 监听文本消息
 weixin.textMsg(function(msg) {
-    console.log("textMsg received");
-    console.log(JSON.stringify(msg));
-
     var resMsg = {};
 
     switch (msg.content) {
-        case "文本" :
+        case "1" :
             // 返回文本消息
-            resMsg = {
-                fromUserName : msg.toUserName,
-                toUserName : msg.fromUserName,
-                msgType : "text",
-                content : "这是文本回复",
-                funcFlag : 0
-            };
+            getRecommend().then(function(data) {
+                resMsg = {
+                    fromUserName : msg.toUserName,
+                    toUserName : msg.fromUserName,
+                    msgType : "text",
+                    content : data,
+                    funcFlag : 0
+                };
+            });
             break;
 
         case "音乐" :
@@ -76,6 +94,18 @@ weixin.textMsg(function(msg) {
                 articles : articles,
                 funcFlag : 0
             }
+            break;
+
+        default:
+            // 返回文本消息
+            resMsg = {
+                fromUserName : msg.toUserName,
+                toUserName : msg.fromUserName,
+                msgType : "text",
+                content : "感谢您的关注，酷粒是一个专注酷链接分享的站点。\n 回复【1】可查看今天推荐",
+                funcFlag : 0
+            };
+            break;
     }
 
     weixin.sendMsg(resMsg);

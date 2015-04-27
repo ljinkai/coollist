@@ -3,6 +3,7 @@
  *
  */
 var ejs = require('ejs');
+var Q = require('q');
 var AV = require('avoscloud-sdk').AV;
 var avs = require('../services/AVService.js');
 var limit = 30;
@@ -100,6 +101,22 @@ function timeAgo(timeStr,timeFlag) {
 
 var webSite = AV.Object.extend("WebSite");
 
+var getRecommend = function() {
+    var deferred = Q.defer();
+    avs.findHome(null,"WebSite",{"limit":10}).then(function(result) {
+        var resArray = result.listArray;
+        var str = "";
+        for (var i = 0 ; i < resArray.length; i++) {
+            var item = resArray[i];
+            str += item.title;
+            str += "\n";
+        }
+        deferred.resolve(str);
+    },function(error) {
+        deferred.reject(error);
+    });
+    return deferred.promise;
+}
 module.exports = {
     home: function (req, res) {
         ejs.filters.timeago = function(time) {
