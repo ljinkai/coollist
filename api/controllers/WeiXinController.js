@@ -86,7 +86,7 @@ weixin.textMsg(function(msg) {
 
                     avs.add(null,"WebSite",{"url":url,"title":title,
                         "summary":title,"read":1,"up":1,"priority":0,
-                        "site":"","user":"wh_" + msg.fromUserName,"nick":msg.fromUserName}).then(function(data) {
+                        "site":"","user":"wc_andy","nick":"Andy"}).then(function(data) {
                             weixin.sendMsg(resMsg);
                         },function(error) {
                             console.log("inner:url:add error");
