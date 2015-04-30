@@ -10,6 +10,7 @@ var request = require('request');
 var cheerio = require("cheerio");
 var avs = require('../services/AVService.js');
 var weixin = require('../services/WeiXinService.js');
+var log = sails.log;
 
 
 var TOKEN = "coollist1984";
@@ -52,7 +53,7 @@ weixin.textMsg(function(msg) {
     if (content.indexOf("http:") == 0 || content.indexOf("https:") == 0) {
         content = "inner:url";
     }
-
+    log.info("textmsg,",content);
     switch (content) {
         case "1" :
             // 返回文本消息
@@ -83,9 +84,12 @@ weixin.textMsg(function(msg) {
                         content : "[" + title + "] 已成功添加\n <a href='http://coollist.cn'>访问酷粒查看</a>",
                         funcFlag : 0
                     };
+                    log.info("textmsg2,",title);
+
                     avs.add(null,"WebSite",{"url":url,"title":title,
                         "summary":title,"read":1,"up":1,"priority":0,
                         "site":"","user":"cl_andy","nick":"Andy"}).then(function(data) {
+                            log.info("textmsg3,",resMsg);
                             weixin.sendMsg(resMsg);
                         },function(error) {
                             console.log("inner:url:add error");
