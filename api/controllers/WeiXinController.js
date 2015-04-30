@@ -69,7 +69,7 @@ weixin.textMsg(function(msg) {
             });
             break;
         case "inner:url" :
-            var url = content;
+            var url = msg.content;
             download(url, function(data) {
                 if (data) {
                     var $ = cheerio.load(data);
