@@ -53,7 +53,6 @@ weixin.textMsg(function(msg) {
     if (content.indexOf("http:") == 0 || content.indexOf("https:") == 0) {
         content = "inner:url";
     }
-    log.info("textmsg,",content);
     switch (content) {
         case "1" :
             // 返回文本消息
@@ -84,12 +83,10 @@ weixin.textMsg(function(msg) {
                         content : "[" + title + "] 已成功添加\n <a href='http://coollist.cn'>访问酷粒查看</a>",
                         funcFlag : 0
                     };
-                    log.info("textmsg2,",title);
 
                     avs.add(null,"WebSite",{"url":url,"title":title,
                         "summary":title,"read":1,"up":1,"priority":0,
-                        "site":"","user":"cl_andy","nick":"Andy"}).then(function(data) {
-                            log.info("textmsg3,",resMsg);
+                        "site":"","user":"wh_" + msg.fromUserName,"nick":msg.fromUserName}).then(function(data) {
                             weixin.sendMsg(resMsg);
                         },function(error) {
                             console.log("inner:url:add error");
@@ -153,7 +150,8 @@ weixin.textMsg(function(msg) {
                 fromUserName : msg.toUserName,
                 toUserName : msg.fromUserName,
                 msgType : "text",
-                content : "感谢您的关注，酷粒是一个专注酷链接分享的站点。\n 回复【1】可查看今天推荐",
+                content : "感谢您的关注，酷粒是一个专注酷链接分享的站点。" +
+                    "\n 回复【1】可查看今天推荐 \n 回复 网址(如：【http://www.baidu.com】)可自动添加到酷粒",
                 funcFlag : 0
             };
             weixin.sendMsg(resMsg);
