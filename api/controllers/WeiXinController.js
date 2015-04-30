@@ -6,8 +6,11 @@ var ejs = require('ejs');
 var Q = require('q');
 var url = require('url');
 var crypto = require('crypto');
+var request = require('request');
+var cheerio = require("cheerio");
 var avs = require('../services/AVService.js');
 var weixin = require('../services/WeiXinService.js');
+
 
 var TOKEN = "coollist1984";
 weixin.token = 'coollist1984';
@@ -35,12 +38,22 @@ var getRecommend = function() {
     return deferred.promise;
 }
 
-
+function download(url, callback) {
+    request(url, function (error, response, html) {
+        if (!error && response.statusCode == 200) {
+            callback(html);
+        }
+    });
+}
 // 监听文本消息
 weixin.textMsg(function(msg) {
     var resMsg = {};
+    var content = msg.content;
+    if (content.indexOf("http:") == 0 || content.indexOf("https:") == 0) {
+        content = "inner:url";
+    }
 
-    switch (msg.content) {
+    switch (content) {
         case "1" :
             // 返回文本消息
             getRecommend().then(function(data) {
@@ -52,6 +65,26 @@ weixin.textMsg(function(msg) {
                     funcFlag : 0
                 };
                 weixin.sendMsg(resMsg);
+            });
+            break;
+        case "inner:url" :
+            var url = content;
+            download(url, function(data) {
+                if (data) {
+                    var $ = cheerio.load(data);
+                    var title = "";
+                    $("title").each(function(i, e) {
+                        title = $(e).text();
+                    });
+                    resMsg = {
+                        fromUserName : msg.toUserName,
+                        toUserName : msg.fromUserName,
+                        msgType : "text",
+                        content : "[" + title + "] 已成功添加\n <a href='http://coollist.cn'>访问酷粒查看</a>",
+                        funcFlag : 0
+                    };
+                    weixin.sendMsg(resMsg);
+                }
             });
             break;
         case "音乐" :
