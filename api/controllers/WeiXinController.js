@@ -83,7 +83,13 @@ weixin.textMsg(function(msg) {
                         content : "[" + title + "] 已成功添加\n <a href='http://coollist.cn'>访问酷粒查看</a>",
                         funcFlag : 0
                     };
-                    weixin.sendMsg(resMsg);
+                    avs.add(null,"WebSite",{"url":url,"title":title,
+                        "summary":title,"read":1,"up":1,"priority":0,
+                        "site":"","user":"cl_andy","nick":"Andy"}).then(function(data) {
+                            weixin.sendMsg(resMsg);
+                        },function(error) {
+                            console.log("inner:url:add error");
+                        });
                 }
             });
             break;
