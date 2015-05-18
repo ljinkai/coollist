@@ -17,7 +17,7 @@ var avs = require('../services/AVService.js');
 var emailServ = require('../services/EmailService.js');
 var randtoken = require('rand-token');
 AV.initialize("e4wnmd3z7unk5wxu3jm3579abpvopi9bb2e7fgsmqfl3zsqk", "4fktyp6v43v3n1vgke5771tovv62xuxsatnux7weq4b9kqwz");
-
+var ids = [];
 module.exports = {
     addLink: function (req, res) {
         var GameScore = AV.Object.extend("WebSite");
@@ -182,6 +182,35 @@ module.exports = {
                 res.json(result);
             }
         });
+    },
+    testSocket: function(req, res) {
+//        var friendId = req.param('friendId');
+//        sails.sockets.emit(friendId, 'privateMessage', {from: req.session.userId, msg: 'Hi!'});
+//        res.json({
+//            message: 'Message sent!'
+//        });
+
+        var nameSent = req.param('name');
+        if (nameSent && req.isSocket){
+            setTimeout(function() {
+                console.log("print:settime:");
+                var toId = ids[1];
+                var fromId = ids[0];
+                sails.sockets.emit(toId, 'user', {from: fromId, msg: 'Hi!'});
+//                sails.sockets.blast("user", { msg: 'Hi there!' });
+            },4000);
+            res.json({
+                message: "return " + nameSent
+            });
+
+        } else if (req.isSocket){
+            var socketId = sails.sockets.id(req.socket);
+            console.log(socketId);
+            ids.push(socketId);
+        } else {
+            res.render("socket");
+        }
+
     }
 };
 

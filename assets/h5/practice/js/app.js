@@ -1,0 +1,3 @@
+function Ball(radius, color) {
+
+}
