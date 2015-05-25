@@ -13,6 +13,7 @@ var cheerio = require("cheerio");
 
 
 
+
 var avs = require('../services/AVService.js');
 AV.initialize("e4wnmd3z7unk5wxu3jm3579abpvopi9bb2e7fgsmqfl3zsqk", "4fktyp6v43v3n1vgke5771tovv62xuxsatnux7weq4b9kqwz");
 function formatDate(now) {

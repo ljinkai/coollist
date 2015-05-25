@@ -1,0 +1,14 @@
+{
+    "name": "Push Demo",
+    "short_name": "Push Demo",
+    "icons": [{
+        "src": "/h5/chrome-notification/images/icon-192x192.pngimages/icon-192x192.png",
+        "sizes": "192x192"
+    }],
+    "start_url": "./index.html?homescreen=1",
+    "display": "standalone",
+    "gcm_sender_id": "761113736801",
+
+    "//": "gcm_user_visible_only is only needed until Chrome 44 is in stable ",
+    "gcm_user_visible_only": true
+}
