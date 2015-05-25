@@ -12,7 +12,6 @@ var avs = require('../services/AVService.js');
 var weixin = require('../services/WeiXinService.js');
 var log = sails.log;
 var needle = require('needle');
-var gcm = require('node-gcm');
 
 
 
