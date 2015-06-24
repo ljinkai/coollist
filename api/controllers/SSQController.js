@@ -22,7 +22,10 @@ module.exports = {
             headers: {
             }
         };
-        var year = "2010";
+        var year = req.param("year");
+        if (!year) {
+            return false;
+        }
         var url = "http://www.3dcp.cn/zs/gonggao.php?type=ssq&year=" + year;
 
         needle.get(url, options,function(error, result) {
@@ -91,23 +94,16 @@ module.exports = {
     getSSQ : function(req,res) {
         var GameScore = AV.Object.extend("SSQ");
         var query = new AV.Query(GameScore);
+        var year = req.param("year");
 
-
-//        query.limit(limit); // limit to at most 10 results
-        query.descending("updatedAt");
+        query.limit(1000); // limit to at most 10 results
+        query.greaterThanOrEqualTo("qi",year + "001");
+        query.lessThanOrEqualTo("qi",year + "089");
+        query.ascending("riqi");
 
         query.find({
             success: function(results) {
                 // Do something with the returned AV.Object values
-                var resArray = [];
-                var ups = [];
-//                for (var i = 0; i < results.length; i++) {
-//                    var object = results[i];
-//                    var temp = {"url":object.get('url'),"title":object.get('title'),"nick":object.get('nick'),
-//                        "up":object.get('up'),"user":object.get('user'),"time":object.createdAt,"id":object.id};
-//                    ups.push(object.get('user'));
-//                    resArray.push(temp);
-//                }
                 var result = {"_STATE_":"200","MSG":"成功","DATA":results};
                 res.json(result);
             },
@@ -119,7 +115,7 @@ module.exports = {
 
     },
     showSSQ: function(req,res) {
-        res.render("ssq",{});
+        res.render("ssq/ssq",{});
     }
 };
 

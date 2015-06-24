@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="height:400px"></div>
+<!-- ECharts单文件引入 -->
+<select id="year">
+    <option value="2003">2003</option>
+    <option value="2004">2004</option>
+    <option value="2005">2005</option>
+    <option value="2006">2006</option>
+    <option value="2007">2007</option>
+    <option value="2008">2008</option>
+    <option value="2009">2009</option>
+    <option value="2010">2010</option>
+    <option value="2011">2011</option>
+</select>
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script type="text/javascript">
+    var year = "2003";
+    var myChart;
+    function getSSQ(year) {
+        var url = "/SSQ/getSSQ/?year=" + year;
+        $.get(url , function( data ) {
+            var res = data.DATA;
+            var xs = [];
+            var values = [];
+            var bCount = [];
+            for (var i = 0;i < 17;i++) {
+                bCount[i] = 0;
+            }
+            for (var i = 0; i < res.length;i++) {
+                xs.push(res[i].qi);
+                var blue = parseInt(res[i].blue);
+//                console.log(parseInt(res[i].blue) + ":print::" + res[i].qi + "==" + res[i].riqi);
+                values.push(res[i].blue);
+                bCount[blue] += 1;
+            }
+            var bDef = [];
+            for (var i = 0;i < 17;i++) {
+                bDef.push(i);
+            }
+            var option = {
+                tooltip: {
+                    show: true
+                },
+                legend: {
+                    data:['销量']
+                },
+                xAxis : [
+                    {
+                        type : 'category',
+                        data : bDef
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value'
+                    }
+                ],
+                series : [
+                    {
+                        "name":"销量",
+                        "type":"bar",
+                        "data":bCount
+                    }
+                ]
+            };
+
+            // 为echarts对象加载数据
+            myChart.setOption(option);
+
+//                    console.log(JSON.stringify(xs) + "print::" + JSON.stringify(values));
+        });
+    }
+    // 路径配置
+    require.config({
+        paths: {
+            echarts: 'http://echarts.baidu.com/build/dist'
+        }
+    });
+
+    // 使用
+    require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                myChart = ec.init(document.getElementById('main'));
+
+                //get ssq
+                getSSQ("2003");
+            }
+    );
+</script>
+<script src="/vendor/jquery/jquery.js"></script>
+<script type="text/javascript">
+    $("#year").bind("change",function() {
+        var year = $(this).find("option:selected").text();
+        getSSQ(year);
+    })
+</script>
+</body>
