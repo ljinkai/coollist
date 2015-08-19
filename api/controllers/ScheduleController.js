@@ -29,27 +29,27 @@ var rssArrayAfter = [
 ];
 //--first
 //初始化并设置定时任务的时间
-var rule = new schedule.RecurrenceRule();
-rule.hour = 2;
-rule.minute = 0;
-//处理要做的事情
-var j = schedule.scheduleJob(rule, function(){
-    spiderCtr.excuteRssInsert(rssArray,10);
-});
-//--second
-var ruleNoon = new schedule.RecurrenceRule();
-ruleNoon.hour = 11;
-ruleNoon.minute = 0;
-//处理要做的事情
-var noon = schedule.scheduleJob(ruleNoon, function(){
-    spiderCtr.excuteRssInsert(rssArrayNoon,6);
-});
-//--third
-var ruleAfter = new schedule.RecurrenceRule();
-ruleAfter.hour = 14;
-ruleAfter.minute = 0;
-//处理要做的事情
-var after = schedule.scheduleJob(ruleAfter, function(){
-    spiderCtr.excuteRssInsert(rssArrayAfter,5);
-});
+//var rule = new schedule.RecurrenceRule();
+//rule.hour = 2;
+//rule.minute = 0;
+////处理要做的事情
+//var j = schedule.scheduleJob(rule, function(){
+//    spiderCtr.excuteRssInsert(rssArray,10);
+//});
+////--second
+//var ruleNoon = new schedule.RecurrenceRule();
+//ruleNoon.hour = 11;
+//ruleNoon.minute = 0;
+////处理要做的事情
+//var noon = schedule.scheduleJob(ruleNoon, function(){
+//    spiderCtr.excuteRssInsert(rssArrayNoon,6);
+//});
+////--third
+//var ruleAfter = new schedule.RecurrenceRule();
+//ruleAfter.hour = 14;
+//ruleAfter.minute = 0;
+////处理要做的事情
+//var after = schedule.scheduleJob(ruleAfter, function(){
+//    spiderCtr.excuteRssInsert(rssArrayAfter,5);
+//});
 
