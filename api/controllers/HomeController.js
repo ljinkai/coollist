@@ -122,6 +122,13 @@ module.exports = {
         ejs.filters.timeago = function(time) {
             return timeAgo(time,true);
         };
+        ejs.filters.site = function(str) {
+            str = str.split("//")[1];
+            if (str.indexOf("?") > 0) {
+                str = str.split("?")[0];
+            }
+            return str;
+        };
 
         avs.findHome(req,"WebSite").then(function(result) {
             var resArray = result.listArray;

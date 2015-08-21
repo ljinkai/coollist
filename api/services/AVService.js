@@ -113,7 +113,7 @@ module.exports = {
                 for (var i = 0; i < results.length; i++) {
                     var object = results[i];
                     var temp = {"url":object.get('url'),"title":object.get('title'),"nick":object.get('nick'),
-                        "up":object.get('up'),"user":object.get('user'),"time":object.createdAt,"id":object.id};
+                        "up":object.get('up'),"site":object.get('site'),"user":object.get('user'),"time":object.createdAt,"id":object.id};
                     ups.push(object.id);
                     resArray.push(temp);
                 }

@@ -109,6 +109,10 @@ a {
 .ls_title {
   padding-left: 8px;
 }
+.ls_site {
+  font-size: 6px;
+  color: #808080;
+}
 .ls_up {
   float: left;
   width: 10px;
@@ -200,6 +204,10 @@ a {
   display: block;
   height: 40px;
   line-height: 40px;
+}
+.item_site {
+  font-size: 6px;
+  color: #808080;
 }
 .item_line {
   width: 100%;

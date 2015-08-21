@@ -1,13 +1,16 @@
 <div class="item_page" ng-controller="CommentController">
     <div class="item_title" data-id="<%= result.id %>">
         <a href="<%=result.url%>" class="item_title_a" target="_blank" alt="<%= result.title %>"><%= result.title %></a>
+        <% if (result.site) {%>
+        <span class="item_site">（<%=: result.site | site %>）</span>
+        <%}%>
     </div>
     <div class="item_line item_sub">
         <span><span id="<%= result.id %>_up_count"><%= result.up %></span>顶 </span>
         <% if (result.nick) {%>
         <span>by <%=result.nick%> | </span>
         <%}%>
-        <span><a class="item_comment_a" href="/item/<%= result.id %>">comment</a> | </span>
+        <span><a class="item_comment_a" href="/item/<%= result.id %>">讨论</a> | </span>
         <span><%=: result.time | timeago %> | </span>
         <span class="item_weibo"><wb:share-button appkey="3160188751" addition="simple" type="icon" picture_search="false" ralateUid="5543055925"></wb:share-button></span>
     </div>

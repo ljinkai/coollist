@@ -113,10 +113,17 @@ module.exports = {
         ejs.filters.timeago = function(time) {
             return timeAgo(time,true);
         };
+        ejs.filters.site = function(str) {
+            str = str.split("//")[1];
+            if (str.indexOf("?") > 0) {
+                str = str.split("?")[0];
+            }
+            return str;
+        };
         var id = req.param("id");
         avs.first(req,"WebSite","objectId",id).then(function(object) {
             var temp = {"url":object.get('url'),"title":object.get('title'),"nick":object.get('nick'),
-                "up":object.get('up'),"user":object.get('user'),"time":object.createdAt,"id":object.id};
+                "up":object.get('up'),"site":object.get('site'),"user":object.get('user'),"time":object.createdAt,"id":object.id};
             res.view("item",{"result":temp});
         },function(error) {
             res.notFound();

@@ -10,13 +10,17 @@
                     <span class="ls_up_img" id="<%= item.id %>_up" ng-click="duang($event,'<%= item.id %>')"></span>
                 <%}%>
             </span>
-            <a href="<%=item.url%>" class="ls_a" target="_blank" alt="<%= item.title %>"><%= item.title %></a>
+            <a href="<%=item.url%>" class="ls_a" target="_blank" alt="<%= item.title %>"><%= item.title %>
+            </a>
+            <% if (item.site) {%>
+                <span class="ls_site">（<%=: item.site | site %>）</span>
+            <%}%>
             <div class="ls_sub">
                 <span><span id="<%= item.id %>_up_count"><%= item.up %></span>顶 </span>
                 <% if (item.nick) {%>
                     <span>by <%=item.nick%>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                 <%}%>
-                <span><a class="ls_comment" href="/item/<%= item.id %>/<%= item.title %>" title="<%= item.title %>">comment</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                <span><a class="ls_comment" href="/item/<%= item.id %>/<%= item.title %>" title="<%= item.title %>">讨论</a>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                 <span><%=: item.time | timeago %></span>
             </div>
         </td>
