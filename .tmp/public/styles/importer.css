@@ -211,11 +211,15 @@ a {
 .item_sub {
   width: 100%;
   clear: both;
-  height: 12px;
-  line-height: 12px;
+  height: 27px;
+  line-height: 22px;
   font-size: 12px;
-  margin-bottom: 10px;
+  margin-bottom: 0px;
   color: #828282;
+}
+.item_weibo {
+  position: absolute;
+  margin-left: 10px;
 }
 .item_comment_a {
   color: #828282;

@@ -8,7 +8,8 @@
         <span>by <%=result.nick%> | </span>
         <%}%>
         <span><a class="item_comment_a" href="/item/<%= result.id %>">comment</a> | </span>
-        <span><%=: result.time | timeago %></span>
+        <span><%=: result.time | timeago %> | </span>
+        <span class="item_weibo"><wb:share-button appkey="3160188751" addition="simple" type="icon" picture_search="false" ralateUid="5543055925"></wb:share-button></span>
     </div>
 
     <div class="item_line">
