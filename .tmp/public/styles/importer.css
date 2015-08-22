@@ -134,6 +134,7 @@ a {
   display: block;
   width: auto;
   float: left;
+  line-height: 24px;
 }
 .ls_sub {
   width: 90%;
@@ -202,8 +203,8 @@ a {
 .item_title {
   width: 100%;
   display: block;
-  height: 40px;
-  line-height: 40px;
+  line-height: 20px;
+  margin-top: 8px;
 }
 .item_site {
   font-size: 6px;
