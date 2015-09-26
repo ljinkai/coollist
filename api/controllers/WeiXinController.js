@@ -182,7 +182,7 @@ weixin.textMsg(function(msg) {
                 toUserName : msg.fromUserName,
                 msgType : "text",
                 content : "感谢您的关注，酷粒是一个专注酷链接分享的站点。" +
-                    "\n 回复【1】可查看今天推荐 \n 回复 网址(如：【http://www.baidu.com】)可自动添加到酷粒 \n " +
+                    "\n 回复【1】可查看今天推荐 \n 回复带http或者https的网址(如：【http://www.baidu.com】)可自动添加到酷粒 \n " +
                     "也可以直接<a href='http://coollist.cn'>访问酷粒查看</a>",
                 funcFlag : 0
             };
