@@ -9,12 +9,12 @@ var crypto = require('crypto');
 var request = require('request');
 var cheerio = require("cheerio");
 var avs = require('../services/AVService.js');
+var config = require('../services/private.js');
 var weixin = require('../services/WeiXinService.js');
 var log = sails.log;
 
 
-var TOKEN = "coollist1984";
-weixin.token = 'coollist1984';
+weixin.token = '';
 
 
 var getRecommend = function() {

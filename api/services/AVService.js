@@ -5,6 +5,8 @@
 var ejs = require('ejs');
 var AV = require('avoscloud-sdk').AV;
 var Q = require('q');
+var config = require('../services/private.js');
+
 
 
 var webUp = AV.Object.extend("WebUp");
@@ -28,7 +30,7 @@ var getClientCookie = function(req) {
 module.exports = {
     add: function (req, object, data) {
         var deferred = Q.defer();
-        AV.initialize("e4wnmd3z7unk5wxu3jm3579abpvopi9bb2e7fgsmqfl3zsqk", "4fktyp6v43v3n1vgke5771tovv62xuxsatnux7weq4b9kqwz");
+        AV.initialize(config.getConfig("avs_key1"), config.getConfig("avs_key2"));
         var Table = AV.Object.extend(object);
         var table = new Table();
         table.save(data, {
@@ -153,7 +155,7 @@ module.exports = {
     },
     first: function (req, object, key,value) {
         var deferred = Q.defer();
-        AV.initialize("e4wnmd3z7unk5wxu3jm3579abpvopi9bb2e7fgsmqfl3zsqk", "4fktyp6v43v3n1vgke5771tovv62xuxsatnux7weq4b9kqwz");
+        AV.initialize(config.getConfig("avs_key1"), config.getConfig("avs_key2"));
         var GameScore = AV.Object.extend(object);
         var query = new AV.Query(GameScore);
         query.equalTo(key, value);
