@@ -27,7 +27,7 @@ module.exports = {
         var user = req.param("id");
         var nick = req.param("nick");
         gameScore.set("url", url);
-        gameScore.set("title", name);
+        gameScore.set("title", name.replace(/\n/g,""));
         gameScore.set("user", user);
         gameScore.set("nick", nick);
         gameScore.set("read", 1);

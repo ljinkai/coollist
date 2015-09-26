@@ -115,6 +115,7 @@ angular.module("app",[])
                     var name = $(".sp_name").val();
                     if (url.length == 0 || name.length == 0) {
                         alert("提交不完整");
+                        return false;
                     }
                     var id = getCookie("id");
                     var nick = getCookie("nick");
