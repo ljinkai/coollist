@@ -38,7 +38,7 @@ var getRecommend = function() {
     });
     return deferred.promise;
 }
-var getRecommend = function() {
+var getRecommendMsg = function() {
     var deferred = Q.defer();
     avs.findHome(null,"WebSite",{"limit":5}).then(function(result) {
         var resArray = result.listArray;
@@ -47,7 +47,7 @@ var getRecommend = function() {
             var item = resArray[i];
             str += (i + 1) + "、";
             str += item.title;
-            str += item.url;
+            str += " http://coollist.cn/item/" + item.id;
             str += "\n";
         }
         deferred.resolve(str);
@@ -87,7 +87,7 @@ weixin.textMsg(function(msg) {
             break;
         case "cl" :
             // 返回文本消息
-            getRecommend().then(function(data) {
+            getRecommendMsg().then(function(data) {
                 resMsg = {
                     fromUserName : msg.toUserName,
                     toUserName : msg.fromUserName,
