@@ -50,6 +50,8 @@ angular.module("app",[])
                         $scope.nav_item = "new";
                     } else if (loc.indexOf("/submit") > 0) {
                         $scope.nav_item = "submit";
+                    } else if (loc.indexOf("/my") > 0) {
+                        $scope.nav_item = "my";
                     }
                 }
                 $scope._initUser();
@@ -64,6 +66,7 @@ angular.module("app",[])
                         window.location.href = "/login";
                     }
                 }
+
             }])
     .controller('SpiderController',
         ['$rootScope', '$scope','$http',

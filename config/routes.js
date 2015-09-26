@@ -34,6 +34,7 @@ module.exports.routes = {
 
     '/': "HomeController.home",
     '/new': "HomeController.new",
+    '/my': "HomeController.myList",
     '/submit': {
         view: 'submit'
     },

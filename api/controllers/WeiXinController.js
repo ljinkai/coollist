@@ -38,6 +38,24 @@ var getRecommend = function() {
     });
     return deferred.promise;
 }
+var getRecommend = function() {
+    var deferred = Q.defer();
+    avs.findHome(null,"WebSite",{"limit":5}).then(function(result) {
+        var resArray = result.listArray;
+        var str = "";
+        for (var i = 0 ; i < resArray.length; i++) {
+            var item = resArray[i];
+            str += (i + 1) + "、";
+            str += item.title;
+            str += item.url;
+            str += "\n";
+        }
+        deferred.resolve(str);
+    },function(error) {
+        deferred.reject(error);
+    });
+    return deferred.promise;
+}
 
 function download(url, callback) {
     request(url, function (error, response, html) {
@@ -55,6 +73,19 @@ weixin.textMsg(function(msg) {
     }
     switch (content) {
         case "1" :
+            // 返回文本消息
+            getRecommend().then(function(data) {
+                resMsg = {
+                    fromUserName : msg.toUserName,
+                    toUserName : msg.fromUserName,
+                    msgType : "text",
+                    content : data,
+                    funcFlag : 0
+                };
+                weixin.sendMsg(resMsg);
+            });
+            break;
+        case "cl" :
             // 返回文本消息
             getRecommend().then(function(data) {
                 resMsg = {

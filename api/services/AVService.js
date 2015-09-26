@@ -100,10 +100,13 @@ module.exports = {
             query.descending("updatedAt");
         }
 
+
         //request cookie
         var cook = getClientCookie(req);
         var loginUser = cook['id'];
-
+        if (params && params.my) {
+            query.equalTo("user",loginUser);
+        }
         query.find({
             success: function(results) {
                 // Do something with the returned AV.Object values

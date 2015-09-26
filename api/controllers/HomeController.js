@@ -117,18 +117,21 @@ var getRecommend = function() {
     });
     return deferred.promise;
 }
+var _filter = function() {
+    ejs.filters.timeago = function(time) {
+        return timeAgo(time,true);
+    };
+    ejs.filters.site = function(str) {
+        str = str.split("//")[1];
+        if (str.indexOf("?") > 0) {
+            str = str.split("?")[0];
+        }
+        return str;
+    };
+}
 module.exports = {
     home: function (req, res) {
-        ejs.filters.timeago = function(time) {
-            return timeAgo(time,true);
-        };
-        ejs.filters.site = function(str) {
-            str = str.split("//")[1];
-            if (str.indexOf("?") > 0) {
-                str = str.split("?")[0];
-            }
-            return str;
-        };
+        _filter();
 
         avs.findHome(req,"WebSite").then(function(result) {
             var resArray = result.listArray;
@@ -139,14 +142,23 @@ module.exports = {
         });
     },
     new: function (req, res) {
-        ejs.filters.timeago = function(time) {
-            return timeAgo(time,true);
-        };
+        _filter();
 
         avs.findHome(req,"WebSite",{"new":true}).then(function(result) {
             var resArray = result.listArray;
             var ups = result.ups;
             res.view("homepage",{"results":resArray,"ups":ups,"next":{"skip":30,"query":"new"}});
+        },function(error) {
+            res.notFound();
+        });
+    },
+    myList: function (req, res) {
+        _filter();
+
+        avs.findHome(req,"WebSite",{"my":true}).then(function(result) {
+            var resArray = result.listArray;
+            var ups = result.ups;
+            res.view("homepage",{"results":resArray,"ups":ups,"next":{"skip":30,"query":"my"}});
         },function(error) {
             res.notFound();
         });
@@ -160,13 +172,16 @@ module.exports = {
         if (query && (query == "new")) {
             params["new"] = true;
         }
+        if (query && (query == "my")) {
+            params["my"] = true;
+        }
         avs.findHome(req,"WebSite",params).then(function(result) {
             var skip = parseInt(req.param("skip")) + limit;
             var resArray = result.listArray;
             var ups = result.ups;
             var resData = {"results":resArray,"ups":ups,"next":{"skip":skip}};
-            if (query && (query == "new")) {
-                resData.next["query"] = "new";
+            if (query) {
+                resData.next["query"] = query;
             }
             res.view("homepage",resData);
         },function(error) {
