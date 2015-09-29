@@ -26,7 +26,9 @@ a {color: #000000;}
 }
 //
 .header_set {text-align: right;padding-right: 8px;}
-.ls_body {text-align: left;color: #828282;line-height: 1.8em;}
+.ls_body {text-align: left;color: #828282;line-height: 1.8em;position: relative;}
+.ls_qrcode {position: absolute;right: 0px;top: 0px;text-align: center;font-size: 12px;}
+.ls_qrcode_img {width: 120px;height: 120px;}
 .ls_item {float: left;width: 100%;}
 .ls_row {margin-left: 0px;}
 .ls_num {color: #828282;height:42px;text-align: right;vertical-align: top;}
@@ -88,5 +90,8 @@ a {color: #000000;}
 
 @media screen and (max-width: 767px) {
   .ls_a {width: 92%;}
-
+  .ls_qrcode {display: none;}
+}
+@media screen and (min-width: 1280px) {
+  .ls_qrcode {position: fixed;top: 30px;}
 }

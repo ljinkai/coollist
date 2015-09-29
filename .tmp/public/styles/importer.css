@@ -87,6 +87,18 @@ a {
   text-align: left;
   color: #828282;
   line-height: 1.8em;
+  position: relative;
+}
+.ls_qrcode {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  text-align: center;
+  font-size: 12px;
+}
+.ls_qrcode_img {
+  width: 120px;
+  height: 120px;
 }
 .ls_item {
   float: left;
@@ -264,5 +276,14 @@ a {
 @media screen and (max-width: 767px) {
   .ls_a {
     width: 92%;
+  }
+  .ls_qrcode {
+    display: none;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .ls_qrcode {
+    position: fixed;
+    top: 30px;
   }
 }
