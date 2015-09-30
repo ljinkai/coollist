@@ -280,6 +280,9 @@ a {
   .ls_qrcode {
     display: none;
   }
+  .itemInput {
+    width: 100%;
+  }
 }
 @media screen and (min-width: 1280px) {
   .ls_qrcode {
