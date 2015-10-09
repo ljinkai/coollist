@@ -28,6 +28,7 @@ a {color: #000000;}
 .header_set {text-align: right;padding-right: 8px;}
 .ls_body {text-align: left;color: #828282;line-height: 1.8em;position: relative;}
 .ls_qrcode {position: absolute;right: 0px;top: 0px;text-align: center;font-size: 12px;}
+.ls_qrcode_mb {display: none;}
 .ls_qrcode_img {width: 120px;height: 120px;}
 .ls_item {float: left;width: 100%;}
 .ls_row {margin-left: 0px;}
@@ -86,11 +87,12 @@ a {color: #000000;}
 //footer
 .footer {height: 50px;line-height:50px;width: 100%;text-align: center;
   background-color: rgb(246, 246, 239);border-top:2px #ff6600 solid;}
-.foo_item {list-style: none;margin: 0px 12px;}
+.foo_item {list-style: none;margin: 0px 8px;}
 
 @media screen and (max-width: 767px) {
   .ls_a {width: 92%;}
   .ls_qrcode {display: none;}
+  .ls_qrcode_mb {display:block;text-align: center;}
   .itemInput {width: 100%;}
 }
 @media screen and (min-width: 1280px) {
