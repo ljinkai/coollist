@@ -10,6 +10,7 @@ var log = sails.log;
 var http = require('http');
 var request = require('request');
 var cheerio = require("cheerio");
+var base64 = require('node-base64-image');
 
 
 
@@ -211,6 +212,35 @@ module.exports = {
             res.render("socket");
         }
 
+    },
+    /**
+     * 显示头5条
+     * @param req
+     * @param res
+     */
+    makeWXPage : function(req, res) {
+        avs.findHome(null,"WebSite",{"limit":5}).then(function(result) {
+            var resArray = result.listArray;
+            res.render("wx/pushLayout",{data:resArray});
+        },function(error) {
+            res.server("500");
+        });
+    },
+    /**
+     * 生成本地图片
+     * @param req
+     * @param res
+     */
+    makeWXImg : function(req, res) {
+        var fileName = req.param("file");
+        var base64Str = req.param("base64");
+        base64Str = base64Str.split("base64,")[1];
+        var options = {filename: fileName,path:"assets/images/wx/"};
+        var imageData = new Buffer(base64Str, 'base64');
+        base64.base64decoder(imageData, options, function (err, saved) {
+            if (err) { console.log(err); }
+            res.json({"path":"/images/wx/" + fileName + ".jpg"});
+        });
     }
 };
 

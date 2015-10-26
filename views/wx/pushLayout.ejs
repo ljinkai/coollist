@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <title>酷粒每日推送 - 分享酷的链接</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords"
+        content="酷粒,cool list,coollist,kuli,链接,分享,cool link,share & link,好玩,有趣,有节操">
+      <script src="/vendor/jquery/jquery.js"></script>
+      <script src="/vendor/qrcode/jquery.qrcode.js"></script>
+
+  </head>
+
+  <body class="body">
+    <% data.forEach(function(item,index){%>
+        <div><%=item.title %></div>
+        <div></div>
+        <div class="qrcode" data-url="http://coollist.cn/item/<%=item.id %>"></div>
+    <%})%>
+
+  <script>
+      $(".qrcode").each(function(index,item) {
+          var url = $(item).data("url");
+          $(item).qrcode({
+              "render": 'image',
+              "size": 100,
+              "color": "#3a3",
+              "text": url
+          });
+      });
+      $(".qrcode img").each(function(index,item) {
+          var src = $(item).attr("src");
+          var url = "/common/makeWXImg";
+          var data = {"file":"wx_" + index,"base64":src};
+          $.post(url,data,function(data,res) {
+              if (data) {
+                  $(item).attr("src",data.path);
+          console.log("print::" + $(item).attr("src"));
+              }
+//              console.log(JSON.stringify(data) + "print::" + res);
+          });
+      });
+  </script>
+  </body>
+</html>
