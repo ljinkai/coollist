@@ -7,10 +7,12 @@ var AV = require('avoscloud-sdk').AV;
 var sc = require('node-schedule');
 var sails = require('sails');
 var log = sails.log;
+var Q = require('q');
 var http = require('http');
 var request = require('request');
 var cheerio = require("cheerio");
 var base64 = require('node-base64-image');
+var needle = require('needle');
 
 
 
@@ -213,6 +215,20 @@ module.exports = {
         }
 
     },
+    dairyRead : function(req, res) {
+        var deferred = Q.defer();
+        var url = "http://open.iciba.com/dsapi/";
+        var options = {};
+        needle.get(url,options,function(error, result) {
+            if (error) {
+                deferred.reject("error");
+            } else {
+                var body = JSON.parse(result.body);
+                deferred.resolve(body);
+            }
+        });
+        return deferred.promise;
+    },
     /**
      * 显示头5条
      * @param req
@@ -221,7 +237,14 @@ module.exports = {
     makeWXPage : function(req, res) {
         avs.findHome(null,"WebSite",{"limit":5}).then(function(result) {
             var resArray = result.listArray;
-            res.render("wx/pushLayout",{data:resArray});
+            module.exports.dairyRead(req,res).then(function(resData) {
+                var trans = resData.translation;
+                trans = trans.replace(/词霸小编：/,"");
+                trans = trans.replace(/ /g,"");
+
+                var tip = {"content":resData.content,"translation":trans};
+                res.render("wx/pushLayout",{data:resArray,"tip":tip});
+            });
         },function(error) {
             res.server("500");
         });
@@ -242,5 +265,6 @@ module.exports = {
             res.json({"path":"/images/wx/" + fileName + ".jpg"});
         });
     }
+
 };
 

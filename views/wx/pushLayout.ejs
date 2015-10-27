@@ -12,18 +12,34 @@
   </head>
 
   <body class="body">
+    <p><%= tip.content %></p>
+    <p><%= tip.translation %></p><br>
+    推荐5篇好文，每天进步一点点，长按二维码打开文章链接.<br>
     <% data.forEach(function(item,index){%>
-        <div><%=item.title %></div>
-        <div></div>
-        <div class="qrcode" data-url="http://coollist.cn/item/<%=item.id %>"></div>
+      <section class="article135" style="font-family:微软雅黑;font-size:16px;">
+          <section class="135editor" data-id="7237" style="border: 0px none; padding: 0px; box-sizing: border-box; margin: 0px;">
+              <section style="margin: 3px; text-align:center;box-shadow: rgba(0, 0, 0, 0.298039) 0px 1px 3px; box-sizing: border-box; padding: 16px 0px; background-color: rgb(255, 255, 255);">
+                  <div class="qrcode" data-url="http://coollist.cn/item/<%=item.id %>"></div>
+                  <section class="135brush" data-type="main" style="box-sizing: border-box; padding: 0px; margin: 0px;">
+                  <p style="line-height: 1.35em; margin-top: 10px; overflow: hidden; padding: 0px 16px; word-wrap: break-word; white-space: normal;">
+                      <span style="line-height:1.35em"><%=item.title %></span>
+                  </p>
+                </section>
+              </section>
+          </section>
+      </section>
     <%})%>
+    <section class="article135" style="text-align: center;width: 100%;">
+        <img src="/images/wx/qrcode_for_gh_74ae182dc99b_344.jpg" style="width: 200px;"/><br>
+        <span>长按请关注</span>
+    </section>
 
   <script>
       $(".qrcode").each(function(index,item) {
           var url = $(item).data("url");
           $(item).qrcode({
               "render": 'image',
-              "size": 100,
+              "size": 200,
               "color": "#3a3",
               "text": url
           });
