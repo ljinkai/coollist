@@ -1,0 +1,354 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="STRN">'use strict'</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  2</span> 
+<span class='line'>  3</span> </span><span class="KEYW">var</span><span class="WHIT"> </span><span class="NAME">_</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">'underscore'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  4</span> 
+<span class='line'>  5</span> </span><span class="NAME">module.exports</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">AV</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  6</span> 
+<span class='line'>  7</span> </span><span class="WHIT">  </span><span class="COMM">/**
+<span class='line'>  8</span>    * Constructs a new AV.Error object with the given code and message.
+<span class='line'>  9</span>    * @param {Number} code An error code constant from &lt;code>AV.Error&lt;/code>.
+<span class='line'> 10</span>    * @param {String} message A detailed description of the error.
+<span class='line'> 11</span>    * @class
+<span class='line'> 12</span>    *
+<span class='line'> 13</span>    * &lt;p>Class used for all objects passed to error callbacks.&lt;/p>
+<span class='line'> 14</span>    */</span><span class="WHIT">
+<span class='line'> 15</span> </span><span class="WHIT">  </span><span class="NAME">AV.Error</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">function</span><span class="PUNC">(</span><span class="NAME">code</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">)</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 16</span> </span><span class="WHIT">    </span><span class="NAME">this.code</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">code</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 17</span> </span><span class="WHIT">    </span><span class="NAME">this.message</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">message</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 18</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'> 19</span> 
+<span class='line'> 20</span> </span><span class="WHIT">  </span><span class="NAME">_.extend</span><span class="PUNC">(</span><span class="NAME">AV.Error</span><span class="PUNC">,</span><span class="WHIT"> </span><span class="COMM">/** @lends AV.Error */</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 21</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 22</span>      * Error code indicating some error other than those enumerated here.
+<span class='line'> 23</span>      * @constant
+<span class='line'> 24</span>      */</span><span class="WHIT">
+<span class='line'> 25</span> </span><span class="WHIT">    </span><span class="NAME">OTHER_CAUSE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="PUNC">-</span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 26</span> 
+<span class='line'> 27</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 28</span>      * Error code indicating that something has gone wrong with the server.
+<span class='line'> 29</span>      * If you get this error code, it is AV's fault. Contact us at
+<span class='line'> 30</span>      * https://avoscloud.com/help
+<span class='line'> 31</span>      * @constant
+<span class='line'> 32</span>      */</span><span class="WHIT">
+<span class='line'> 33</span> </span><span class="WHIT">    </span><span class="NAME">INTERNAL_SERVER_ERROR</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">1</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 34</span> 
+<span class='line'> 35</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 36</span>      * Error code indicating the connection to the AV servers failed.
+<span class='line'> 37</span>      * @constant
+<span class='line'> 38</span>      */</span><span class="WHIT">
+<span class='line'> 39</span> </span><span class="WHIT">    </span><span class="NAME">CONNECTION_FAILED</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">100</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 40</span> 
+<span class='line'> 41</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 42</span>      * Error code indicating the specified object doesn't exist.
+<span class='line'> 43</span>      * @constant
+<span class='line'> 44</span>      */</span><span class="WHIT">
+<span class='line'> 45</span> </span><span class="WHIT">    </span><span class="NAME">OBJECT_NOT_FOUND</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">101</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 46</span> 
+<span class='line'> 47</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 48</span>      * Error code indicating you tried to query with a datatype that doesn't
+<span class='line'> 49</span>      * support it, like exact matching an array or object.
+<span class='line'> 50</span>      * @constant
+<span class='line'> 51</span>      */</span><span class="WHIT">
+<span class='line'> 52</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_QUERY</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">102</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 53</span> 
+<span class='line'> 54</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 55</span>      * Error code indicating a missing or invalid classname. Classnames are
+<span class='line'> 56</span>      * case-sensitive. They must start with a letter, and a-zA-Z0-9_ are the
+<span class='line'> 57</span>      * only valid characters.
+<span class='line'> 58</span>      * @constant
+<span class='line'> 59</span>      */</span><span class="WHIT">
+<span class='line'> 60</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_CLASS_NAME</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">103</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 61</span> 
+<span class='line'> 62</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 63</span>      * Error code indicating an unspecified object id.
+<span class='line'> 64</span>      * @constant
+<span class='line'> 65</span>      */</span><span class="WHIT">
+<span class='line'> 66</span> </span><span class="WHIT">    </span><span class="NAME">MISSING_OBJECT_ID</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">104</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 67</span> 
+<span class='line'> 68</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 69</span>      * Error code indicating an invalid key name. Keys are case-sensitive. They
+<span class='line'> 70</span>      * must start with a letter, and a-zA-Z0-9_ are the only valid characters.
+<span class='line'> 71</span>      * @constant
+<span class='line'> 72</span>      */</span><span class="WHIT">
+<span class='line'> 73</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_KEY_NAME</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">105</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 74</span> 
+<span class='line'> 75</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 76</span>      * Error code indicating a malformed pointer. You should not see this unless
+<span class='line'> 77</span>      * you have been mucking about changing internal AV code.
+<span class='line'> 78</span>      * @constant
+<span class='line'> 79</span>      */</span><span class="WHIT">
+<span class='line'> 80</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_POINTER</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">106</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 81</span> 
+<span class='line'> 82</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 83</span>      * Error code indicating that badly formed JSON was received upstream. This
+<span class='line'> 84</span>      * either indicates you have done something unusual with modifying how
+<span class='line'> 85</span>      * things encode to JSON, or the network is failing badly.
+<span class='line'> 86</span>      * @constant
+<span class='line'> 87</span>      */</span><span class="WHIT">
+<span class='line'> 88</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_JSON</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">107</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 89</span> 
+<span class='line'> 90</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 91</span>      * Error code indicating that the feature you tried to access is only
+<span class='line'> 92</span>      * available internally for testing purposes.
+<span class='line'> 93</span>      * @constant
+<span class='line'> 94</span>      */</span><span class="WHIT">
+<span class='line'> 95</span> </span><span class="WHIT">    </span><span class="NAME">COMMAND_UNAVAILABLE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">108</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 96</span> 
+<span class='line'> 97</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'> 98</span>      * You must call AV.initialize before using the AV library.
+<span class='line'> 99</span>      * @constant
+<span class='line'>100</span>      */</span><span class="WHIT">
+<span class='line'>101</span> </span><span class="WHIT">    </span><span class="NAME">NOT_INITIALIZED</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">109</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>102</span> 
+<span class='line'>103</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>104</span>      * Error code indicating that a field was set to an inconsistent type.
+<span class='line'>105</span>      * @constant
+<span class='line'>106</span>      */</span><span class="WHIT">
+<span class='line'>107</span> </span><span class="WHIT">    </span><span class="NAME">INCORRECT_TYPE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">111</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>108</span> 
+<span class='line'>109</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>110</span>      * Error code indicating an invalid channel name. A channel name is either
+<span class='line'>111</span>      * an empty string (the broadcast channel) or contains only a-zA-Z0-9_
+<span class='line'>112</span>      * characters and starts with a letter.
+<span class='line'>113</span>      * @constant
+<span class='line'>114</span>      */</span><span class="WHIT">
+<span class='line'>115</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_CHANNEL_NAME</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">112</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>116</span> 
+<span class='line'>117</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>118</span>      * Error code indicating that push is misconfigured.
+<span class='line'>119</span>      * @constant
+<span class='line'>120</span>      */</span><span class="WHIT">
+<span class='line'>121</span> </span><span class="WHIT">    </span><span class="NAME">PUSH_MISCONFIGURED</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">115</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>122</span> 
+<span class='line'>123</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>124</span>      * Error code indicating that the object is too large.
+<span class='line'>125</span>      * @constant
+<span class='line'>126</span>      */</span><span class="WHIT">
+<span class='line'>127</span> </span><span class="WHIT">    </span><span class="NAME">OBJECT_TOO_LARGE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">116</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>128</span> 
+<span class='line'>129</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>130</span>      * Error code indicating that the operation isn't allowed for clients.
+<span class='line'>131</span>      * @constant
+<span class='line'>132</span>      */</span><span class="WHIT">
+<span class='line'>133</span> </span><span class="WHIT">    </span><span class="NAME">OPERATION_FORBIDDEN</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">119</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>134</span> 
+<span class='line'>135</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>136</span>      * Error code indicating the result was not found in the cache.
+<span class='line'>137</span>      * @constant
+<span class='line'>138</span>      */</span><span class="WHIT">
+<span class='line'>139</span> </span><span class="WHIT">    </span><span class="NAME">CACHE_MISS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">120</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>140</span> 
+<span class='line'>141</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>142</span>      * Error code indicating that an invalid key was used in a nested
+<span class='line'>143</span>      * JSONObject.
+<span class='line'>144</span>      * @constant
+<span class='line'>145</span>      */</span><span class="WHIT">
+<span class='line'>146</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_NESTED_KEY</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">121</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>147</span> 
+<span class='line'>148</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>149</span>      * Error code indicating that an invalid filename was used for AVFile.
+<span class='line'>150</span>      * A valid file name contains only a-zA-Z0-9_. characters and is between 1
+<span class='line'>151</span>      * and 128 characters.
+<span class='line'>152</span>      * @constant
+<span class='line'>153</span>      */</span><span class="WHIT">
+<span class='line'>154</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_FILE_NAME</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">122</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>155</span> 
+<span class='line'>156</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>157</span>      * Error code indicating an invalid ACL was provided.
+<span class='line'>158</span>      * @constant
+<span class='line'>159</span>      */</span><span class="WHIT">
+<span class='line'>160</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_ACL</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">123</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>161</span> 
+<span class='line'>162</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>163</span>      * Error code indicating that the request timed out on the server. Typically
+<span class='line'>164</span>      * this indicates that the request is too expensive to run.
+<span class='line'>165</span>      * @constant
+<span class='line'>166</span>      */</span><span class="WHIT">
+<span class='line'>167</span> </span><span class="WHIT">    </span><span class="NAME">TIMEOUT</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">124</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>168</span> 
+<span class='line'>169</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>170</span>      * Error code indicating that the email address was invalid.
+<span class='line'>171</span>      * @constant
+<span class='line'>172</span>      */</span><span class="WHIT">
+<span class='line'>173</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_EMAIL_ADDRESS</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">125</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>174</span> 
+<span class='line'>175</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>176</span>      * Error code indicating a missing content type.
+<span class='line'>177</span>      * @constant
+<span class='line'>178</span>      */</span><span class="WHIT">
+<span class='line'>179</span> </span><span class="WHIT">    </span><span class="NAME">MISSING_CONTENT_TYPE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">126</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>180</span> 
+<span class='line'>181</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>182</span>      * Error code indicating a missing content length.
+<span class='line'>183</span>      * @constant
+<span class='line'>184</span>      */</span><span class="WHIT">
+<span class='line'>185</span> </span><span class="WHIT">    </span><span class="NAME">MISSING_CONTENT_LENGTH</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">127</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>186</span> 
+<span class='line'>187</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>188</span>      * Error code indicating an invalid content length.
+<span class='line'>189</span>      * @constant
+<span class='line'>190</span>      */</span><span class="WHIT">
+<span class='line'>191</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_CONTENT_LENGTH</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">128</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>192</span> 
+<span class='line'>193</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>194</span>      * Error code indicating a file that was too large.
+<span class='line'>195</span>      * @constant
+<span class='line'>196</span>      */</span><span class="WHIT">
+<span class='line'>197</span> </span><span class="WHIT">    </span><span class="NAME">FILE_TOO_LARGE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">129</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>198</span> 
+<span class='line'>199</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>200</span>      * Error code indicating an error saving a file.
+<span class='line'>201</span>      * @constant
+<span class='line'>202</span>      */</span><span class="WHIT">
+<span class='line'>203</span> </span><span class="WHIT">    </span><span class="NAME">FILE_SAVE_ERROR</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">130</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>204</span> 
+<span class='line'>205</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>206</span>      * Error code indicating an error deleting a file.
+<span class='line'>207</span>      * @constant
+<span class='line'>208</span>      */</span><span class="WHIT">
+<span class='line'>209</span> </span><span class="WHIT">    </span><span class="NAME">FILE_DELETE_ERROR</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">153</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>210</span> 
+<span class='line'>211</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>212</span>      * Error code indicating that a unique field was given a value that is
+<span class='line'>213</span>      * already taken.
+<span class='line'>214</span>      * @constant
+<span class='line'>215</span>      */</span><span class="WHIT">
+<span class='line'>216</span> </span><span class="WHIT">    </span><span class="NAME">DUPLICATE_VALUE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">137</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>217</span> 
+<span class='line'>218</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>219</span>      * Error code indicating that a role's name is invalid.
+<span class='line'>220</span>      * @constant
+<span class='line'>221</span>      */</span><span class="WHIT">
+<span class='line'>222</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_ROLE_NAME</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">139</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>223</span> 
+<span class='line'>224</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>225</span>      * Error code indicating that an application quota was exceeded.  Upgrade to
+<span class='line'>226</span>      * resolve.
+<span class='line'>227</span>      * @constant
+<span class='line'>228</span>      */</span><span class="WHIT">
+<span class='line'>229</span> </span><span class="WHIT">    </span><span class="NAME">EXCEEDED_QUOTA</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">140</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>230</span> 
+<span class='line'>231</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>232</span>      * Error code indicating that a Cloud Code script failed.
+<span class='line'>233</span>      * @constant
+<span class='line'>234</span>      */</span><span class="WHIT">
+<span class='line'>235</span> </span><span class="WHIT">    </span><span class="NAME">SCRIPT_FAILED</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">141</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>236</span> 
+<span class='line'>237</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>238</span>      * Error code indicating that a Cloud Code validation failed.
+<span class='line'>239</span>      * @constant
+<span class='line'>240</span>      */</span><span class="WHIT">
+<span class='line'>241</span> </span><span class="WHIT">    </span><span class="NAME">VALIDATION_ERROR</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">142</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>242</span> 
+<span class='line'>243</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>244</span>      * Error code indicating that invalid image data was provided.
+<span class='line'>245</span>      * @constant
+<span class='line'>246</span>      */</span><span class="WHIT">
+<span class='line'>247</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_IMAGE_DATA</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">150</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>248</span> 
+<span class='line'>249</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>250</span>      * Error code indicating an unsaved file.
+<span class='line'>251</span>      * @constant
+<span class='line'>252</span>      */</span><span class="WHIT">
+<span class='line'>253</span> </span><span class="WHIT">    </span><span class="NAME">UNSAVED_FILE_ERROR</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">151</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>254</span> 
+<span class='line'>255</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>256</span>      * Error code indicating an invalid push time.
+<span class='line'>257</span>      */</span><span class="WHIT">
+<span class='line'>258</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_PUSH_TIME_ERROR</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">152</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>259</span> 
+<span class='line'>260</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>261</span>      * Error code indicating that the username is missing or empty.
+<span class='line'>262</span>      * @constant
+<span class='line'>263</span>      */</span><span class="WHIT">
+<span class='line'>264</span> </span><span class="WHIT">    </span><span class="NAME">USERNAME_MISSING</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">200</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>265</span> 
+<span class='line'>266</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>267</span>      * Error code indicating that the password is missing or empty.
+<span class='line'>268</span>      * @constant
+<span class='line'>269</span>      */</span><span class="WHIT">
+<span class='line'>270</span> </span><span class="WHIT">    </span><span class="NAME">PASSWORD_MISSING</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">201</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>271</span> 
+<span class='line'>272</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>273</span>      * Error code indicating that the username has already been taken.
+<span class='line'>274</span>      * @constant
+<span class='line'>275</span>      */</span><span class="WHIT">
+<span class='line'>276</span> </span><span class="WHIT">    </span><span class="NAME">USERNAME_TAKEN</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">202</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>277</span> 
+<span class='line'>278</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>279</span>      * Error code indicating that the email has already been taken.
+<span class='line'>280</span>      * @constant
+<span class='line'>281</span>      */</span><span class="WHIT">
+<span class='line'>282</span> </span><span class="WHIT">    </span><span class="NAME">EMAIL_TAKEN</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">203</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>283</span> 
+<span class='line'>284</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>285</span>      * Error code indicating that the email is missing, but must be specified.
+<span class='line'>286</span>      * @constant
+<span class='line'>287</span>      */</span><span class="WHIT">
+<span class='line'>288</span> </span><span class="WHIT">    </span><span class="NAME">EMAIL_MISSING</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">204</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>289</span> 
+<span class='line'>290</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>291</span>      * Error code indicating that a user with the specified email was not found.
+<span class='line'>292</span>      * @constant
+<span class='line'>293</span>      */</span><span class="WHIT">
+<span class='line'>294</span> </span><span class="WHIT">    </span><span class="NAME">EMAIL_NOT_FOUND</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">205</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>295</span> 
+<span class='line'>296</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>297</span>      * Error code indicating that a user object without a valid session could
+<span class='line'>298</span>      * not be altered.
+<span class='line'>299</span>      * @constant
+<span class='line'>300</span>      */</span><span class="WHIT">
+<span class='line'>301</span> </span><span class="WHIT">    </span><span class="NAME">SESSION_MISSING</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">206</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>302</span> 
+<span class='line'>303</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>304</span>      * Error code indicating that a user can only be created through signup.
+<span class='line'>305</span>      * @constant
+<span class='line'>306</span>      */</span><span class="WHIT">
+<span class='line'>307</span> </span><span class="WHIT">    </span><span class="NAME">MUST_CREATE_USER_THROUGH_SIGNUP</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">207</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>308</span> 
+<span class='line'>309</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>310</span>      * Error code indicating that an an account being linked is already linked
+<span class='line'>311</span>      * to another user.
+<span class='line'>312</span>      * @constant
+<span class='line'>313</span>      */</span><span class="WHIT">
+<span class='line'>314</span> </span><span class="WHIT">    </span><span class="NAME">ACCOUNT_ALREADY_LINKED</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">208</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>315</span> 
+<span class='line'>316</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>317</span>      * Error code indicating that a user cannot be linked to an account because
+<span class='line'>318</span>      * that account's id could not be found.
+<span class='line'>319</span>      * @constant
+<span class='line'>320</span>      */</span><span class="WHIT">
+<span class='line'>321</span> </span><span class="WHIT">    </span><span class="NAME">LINKED_ID_MISSING</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">250</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>322</span> 
+<span class='line'>323</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>324</span>      * Error code indicating that a user with a linked (e.g. Facebook) account
+<span class='line'>325</span>      * has an invalid session.
+<span class='line'>326</span>      * @constant
+<span class='line'>327</span>      */</span><span class="WHIT">
+<span class='line'>328</span> </span><span class="WHIT">    </span><span class="NAME">INVALID_LINKED_SESSION</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">251</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>329</span> 
+<span class='line'>330</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>331</span>      * Error code indicating that a service being linked (e.g. Facebook or
+<span class='line'>332</span>      * Twitter) is unsupported.
+<span class='line'>333</span>      * @constant
+<span class='line'>334</span>      */</span><span class="WHIT">
+<span class='line'>335</span> </span><span class="WHIT">    </span><span class="NAME">UNSUPPORTED_SERVICE</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">252</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'>336</span> </span><span class="WHIT">    </span><span class="COMM">/**
+<span class='line'>337</span>      * Error code indicating a real error code is unavailable because
+<span class='line'>338</span>      * we had to use an XDomainRequest object to allow CORS requests in
+<span class='line'>339</span>      * Internet Explorer, which strips the body from HTTP responses that have
+<span class='line'>340</span>      * a non-2XX status code.
+<span class='line'>341</span>      * @constant
+<span class='line'>342</span>      */</span><span class="WHIT">
+<span class='line'>343</span> </span><span class="WHIT">    </span><span class="NAME">X_DOMAIN_REQUEST</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NUMB">602</span><span class="WHIT">
+<span class='line'>344</span> </span><span class="WHIT">  </span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>345</span> 
+<span class='line'>346</span> </span><span class="PUNC">}</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>347</span> </span></pre></body></html>
