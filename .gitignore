@@ -1,5 +1,5 @@
 .idea
 .DS_Store
 .tmp
-.node_modules
+node_modules
 *private.js
