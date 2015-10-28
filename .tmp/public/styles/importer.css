@@ -96,9 +96,6 @@ a {
   text-align: center;
   font-size: 12px;
 }
-.ls_qrcode_mb {
-  display: none;
-}
 .ls_qrcode_img {
   width: 120px;
   height: 120px;
@@ -274,7 +271,7 @@ a {
 }
 .foo_item {
   list-style: none;
-  margin: 0px 8px;
+  margin: 0px 12px;
 }
 @media screen and (max-width: 767px) {
   .ls_a {
@@ -282,10 +279,6 @@ a {
   }
   .ls_qrcode {
     display: none;
-  }
-  .ls_qrcode_mb {
-    display: block;
-    text-align: center;
   }
   .itemInput {
     width: 100%;
