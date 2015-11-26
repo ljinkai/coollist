@@ -274,7 +274,6 @@ module.exports = {
         var id = req.param("id");
         var RgUser = AV.Object.extend("WebSite");
         var query = new AV.Query(RgUser);
-        console.log("print::" + id);
         query.equalTo("objectId", id);
         query.first({
             success: function(results) {
