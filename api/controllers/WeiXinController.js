@@ -47,7 +47,8 @@ var getRecommendMsg = function() {
             var item = resArray[i];
             str += (i + 1) + "、";
             str += item.title;
-            str += " http://coollist.cn/item/" + item.id;
+            str += "\n原链:http://coollist.cn/r/" + item.id;
+            str += "\n讨论:http://coollist.cn/c/" + item.id;
             str += "\n";
         }
         deferred.resolve(str);

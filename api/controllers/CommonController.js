@@ -264,7 +264,35 @@ module.exports = {
             if (err) { console.log(err); }
             res.json({"path":"/images/wx/" + fileName + ".jpg"});
         });
+    },
+    /**
+     * 原链生成
+     * @param req
+     * @param res
+     */
+    r : function(req, res) {
+        var id = req.param("id");
+        var RgUser = AV.Object.extend("WebSite");
+        var query = new AV.Query(RgUser);
+        console.log("print::" + id);
+        query.equalTo("objectId", id);
+        query.first({
+            success: function(results) {
+                if (results) {
+                    var url = results.get("url");
+                    res.redirect(url);
+                } else {
+                    res.notFound();
+                }
+            },
+            error: function(error) {
+                res.notFound();
+            }
+        });
+    },
+    c : function(req, res) {
+        var id = req.param("id");
+        res.redirect("/item/" + id);
     }
-
 };
 
